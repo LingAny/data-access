@@ -3,11 +3,12 @@ import os
 
 from flask import Flask, Response
 from flask_compress import Compress
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.wsgi import DispatcherMiddleware
 
+from lingany_api.db import db
 from lingany_api.cache import cache
 from lingany_api.application import Application
+from lingany_api.conf.db_connection.env_sqlalchemy_connection_conf_factory import EnvSqlAlchemyConnectionConfFactory
 
 app = Flask(__name__)
 app.config['APPLICATION_ROOT'] = '/api/v1/lingany-da'
@@ -18,9 +19,11 @@ app.config['CACHE_TYPE'] = os.environ['CACHE_TYPE']
 # app.config['CACHE_REDIS_HOST'] = 'redis'
 # app.config['CACHE_REDIS_PORT'] = '6379'
 
-# app.confing['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost:5432/postgres"
+sql_alchemy_conf = EnvSqlAlchemyConnectionConfFactory.create()
+app.config['SQLALCHEMY_DATABASE_URI'] = sql_alchemy_conf.uri
 
 cache.init_app(app)
+db.init_app(app)
 
 application = Application()
 application.register(app)
