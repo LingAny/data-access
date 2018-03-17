@@ -16,9 +16,7 @@ categories --> system
 
 words: word_id [UUID]
 words: language_id [UUID]
-words: category_id [UUID]
 words: title [TEXT]
 words -> languages
-words --> categories
 
 @enduml
