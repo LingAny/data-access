@@ -17,6 +17,17 @@ categories --> system
 words: word_id [UUID]
 words: language_id [UUID]
 words: title [TEXT]
-words -> languages
+words --> languages
+
+pairs: pair_id [UUID]
+pairs: native_word_id [UUID]
+pairs: foreign_word_id [UUID]
+pairs --> words
+
+training: training_id [UUID]
+training: category_id [UUID]
+training: pair_id [UUID]
+training --> categories
+training -> pairs
 
 @enduml
