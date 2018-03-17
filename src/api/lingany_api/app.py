@@ -5,16 +5,15 @@ from flask import Flask, Response
 from flask_compress import Compress
 from werkzeug.wsgi import DispatcherMiddleware
 
-from rt_incident_api.application import Application
-from rt_incident_api.cache import cache
-
+from lingany_api.cache import cache
+from lingany_api.application import Application
 
 app = Flask(__name__)
-app.config['APPLICATION_ROOT'] = '/api/v1/situations'
+app.config['APPLICATION_ROOT'] = '/api/v1/lingany-da'
 Compress(app)
 app.config['CACHE_TYPE'] = os.environ['CACHE_TYPE']
 
-# app.config['CACHE_KEY_PREFIX'] = '/api/v1/situations'
+# app.config['CACHE_KEY_PREFIX'] = '/api/v1/lingany-da'
 # app.config['CACHE_REDIS_HOST'] = 'redis'
 # app.config['CACHE_REDIS_PORT'] = '6379'
 
@@ -54,7 +53,7 @@ def simple(env, resp):
     return [b'']
 
 
-app.wsgi_app = DispatcherMiddleware(simple, {'/api/v1/situations': app.wsgi_app})
+app.wsgi_app = DispatcherMiddleware(simple, {'/api/v1/lingany-da': app.wsgi_app})
 
 if __name__ == '__main__':
     app.run()
