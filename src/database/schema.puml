@@ -1,0 +1,24 @@
+@startuml
+
+languages: language_id [UUID]
+languages: title [UUID]
+
+system: system_id [UUID]
+system: title [TEXT]
+system: native_language_id [UUID]
+system: foreign_language_id [UUID]
+system -> languages: native, foreign
+
+categories: category_id [UUID]
+categories: system_id [UUID]
+categories: title [TEXT]
+categories --> system
+
+words: word_id [UUID]
+words: language_id [UUID]
+words: category_id [UUID]
+words: title [TEXT]
+words -> languages
+words --> categories
+
+@enduml
