@@ -19,15 +19,11 @@ words: language_id [UUID]
 words: title [TEXT]
 words --> languages
 
-pairs: pair_id [UUID]
-pairs: native_word_id [UUID]
-pairs: foreign_word_id [UUID]
-pairs --> words
 
 training: training_id [UUID]
 training: category_id [UUID]
-training: pair_id [UUID]
+training: native_word_id [UUID]
+training: foreign_word_id [UUID]
 training --> categories
-training -> pairs
 
 @enduml
