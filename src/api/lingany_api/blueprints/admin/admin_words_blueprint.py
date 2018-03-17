@@ -7,7 +7,7 @@ from lingany_api.blueprints.base_blueprint import BaseBlueprint
 
 
 @singleton
-class AdminCategoryBlueprint(BaseBlueprint):
+class AdminWordsBlueprint(BaseBlueprint):
 
     @inject
     def __init__(self) -> None:
@@ -15,7 +15,7 @@ class AdminCategoryBlueprint(BaseBlueprint):
 
     @property
     def _name(self) -> str:
-        return 'admin_category'
+        return 'admin_words'
 
     def _create_blueprint(self) -> Blueprint:
         blueprint = Blueprint(self._name, __name__)
