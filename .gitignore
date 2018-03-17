@@ -1,0 +1,9 @@
+deploy/.vagrant
+.idea
+*.db
+.DS_Store
+venv
+env
+__pycache__
+blog_old.md
+.mypy_cache
