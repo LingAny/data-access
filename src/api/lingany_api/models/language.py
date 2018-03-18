@@ -1,14 +1,15 @@
 from uuid import UUID
 
-from sqlutils import Model
 
-
-class Language(Model):
+class Language:
 
     def __init__(self, uid: UUID) -> None:
-        super().__init__(uid)
-
+        self._uid = uid
         self._title: str = None
+
+    @property
+    def uid(self) -> UUID:
+        return self._uid
 
     @property
     def title(self) -> str:
@@ -16,5 +17,4 @@ class Language(Model):
 
     def fill(self, title: str) -> "Language":
         self._title = title
-        self._filled()
         return self
