@@ -2,16 +2,21 @@
 
 word: word_id [UUID]
 word: text [TEXT]
+word: word_category_id [UUID]
+word --> word_categories
 
-word_translate: word_translate_id [UUID]
-word_translate: word_id [UUID]
-word_translate: language_id [UUID]
-word_translate: translate_1 [text]
-word_translate: translate_2 [text]
-word_translate --> word
-word_translate --> languages
+word_translates: word_translate_id [UUID]
+word_translates: word_id [UUID]
+word_translates: language_id [UUID]
+word_translates: translate_1 [text]
+word_translates: translate_2 [text]
+word_translates --> word
+word_translates --> languages
 
 languages: language_id [UUID]
 languages: title [UUID]
+
+word_categories: word_category_id [UUID]
+word_categories: title [TEXT]
 
 @enduml
