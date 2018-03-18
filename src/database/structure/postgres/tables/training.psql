@@ -1,7 +1,9 @@
 CREATE TABLE training
 (
-    training_id UUID,
+    training_id UUID NOT NULL,
     category_id UUID NOT NULL,
     native_word TEXT NOT NULL,
-    foreign_word TEXT NOT NULL
+    foreign_word TEXT NOT NULL,
+
+    PRIMARY KEY (training_id)
 );
