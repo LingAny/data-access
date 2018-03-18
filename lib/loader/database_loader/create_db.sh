@@ -106,7 +106,7 @@ fi
 
 wait_postgres
 re_create_database "${db_name}" "${db_user}" "${db_password}"
-#load_database_structure
-#load_database_constraints
+load_database_structure
+load_database_constraints
 #load_database_triggers
 

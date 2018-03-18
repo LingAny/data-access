@@ -1,6 +1,6 @@
-Руский
-Английский
-Немецкий
-Французский
-Испанский
-Итальянский
+Russian
+English
+German
+French
+Spanish
+Italian
