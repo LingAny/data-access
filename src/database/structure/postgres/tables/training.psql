@@ -1,0 +1,7 @@
+CREATE TABLE training
+(
+    training_id UUID,
+    category_id UUID NOT NULL,
+    native_word TEXT NOT NULL,
+    foreign_word TEXT NOT NULL
+);
