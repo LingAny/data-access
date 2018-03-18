@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION add_reflection(
+  p_reflection_id UUID,
+  p_title TEXT,
+  p_native_language_id UUID,
+  p_foreign_language_id UUID)
+
+RETURNS void
+AS
+$BODY$
+  BEGIN
+    INSERT INTO reflection (reflection_id, title, native_language_id, foreign_language_id)
+    VALUES (p_reflection_id, p_title, p_native_language_id, p_foreign_language_id);
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
