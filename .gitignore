@@ -4,6 +4,8 @@ deploy/.vagrant
 .DS_Store
 venv
 env
+environments
 __pycache__
 blog_old.md
 .mypy_cache
+
