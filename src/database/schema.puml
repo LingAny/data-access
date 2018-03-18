@@ -3,16 +3,16 @@
 languages: language_id [UUID]
 languages: title [UUID]
 
-system: system_id [UUID]
-system: title [TEXT]
-system: native_language_id [UUID]
-system: foreign_language_id [UUID]
-system -> languages: native, foreign
+reflection: reflection_id [UUID]
+reflection: title [TEXT]
+reflection: native_language_id [UUID]
+reflection: foreign_language_id [UUID]
+reflection -> languages: native, foreign
 
 categories: category_id [UUID]
-categories: system_id [UUID]
+categories: reflection_id [UUID]
 categories: title [TEXT]
-categories --> system
+categories --> reflection
 
 training: training_id [UUID]
 training: category_id [UUID]
