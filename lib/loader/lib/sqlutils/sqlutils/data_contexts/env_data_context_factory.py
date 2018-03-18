@@ -14,7 +14,7 @@ class EnvDataContextFactory(DataContextFactory):
         host = os.environ['DBHOST']
         port = os.environ['DBPORT']
         database = os.environ['DBNAME']
-        user = os.environ['DB_USER']
+        user = os.environ['DBUSER']
         password = os.environ['DBPASS']
 
         return PostgresDataContext(host, port, database, user, password)

@@ -31,10 +31,6 @@ class DataContext(metaclass=ABCMeta):
         return NotImplemented
 
     @abstractmethod
-    def add_many(self, table: str, insert_values: str, insert_args: str) -> Any:
-        return NotImplemented
-
-    @abstractmethod
     def update(self, collection: str, key: str, data: Dict[str, Any]) -> None:
         return NotImplemented
 
