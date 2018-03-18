@@ -1,6 +1,7 @@
 import csv
 import logging
 import os
+from uuid import UUID, uuid4
 
 from os.path import isfile, join
 from typing import List, Any
@@ -38,28 +39,29 @@ logging.getLogger().setLevel(logging.INFO)
 
 
 def main():
-    print('MAIN')
+    logging.info('load database...')
 
     languages = LanguagesReader.read(path + "/structure/list/language_list.txt")
     load_languages(languages=languages)
 
     files = get_files(path + "/structure/dict")
-    print("files: ", files)
 
     for filename in files:
         data = CSVReader.read(filename)
         load_data(data)
 
+    logging.info('completed')
+
 
 def load_languages(languages: List[str]):
     logging.info("load languages...")
     for lang in languages:
-        # print(lang)
-        logging.info(lang)
+        context.callproc('add_language', [uuid4(), lang])
+    logging.info("completed load languages")
 
 
 def load_data(data: List[List[Any]]):
-    pass
+    logging.info("load data..")
 
 
 def get_files(path):

@@ -21,6 +21,8 @@ from sqlutils.errors.foreign_key_violation_error import ForeignKeyViolationError
 from sqlutils.errors.restrict_violation_error import RestrictViolationError
 import os
 
+psycopg2.extras.register_uuid()
+
 
 class PostgresDataContext(DataContext):
 
