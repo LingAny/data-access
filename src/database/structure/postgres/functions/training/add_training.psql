@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION add_training(
+  p_training_id UUID,
+  p_category_id UUID,
+  p_native_word TEXT,
+  p_foreign_word TEXT)
+
+RETURNS void
+AS
+$BODY$
+  BEGIN
+    INSERT INTO training (training_id, category_id, native_word, foreign_word)
+    VALUES (p_training_id, p_category_id, p_native_word, p_foreign_word);
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
