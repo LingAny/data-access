@@ -7,7 +7,7 @@ from lingany_api.models.language import Language
 from lingany_api.persistance.dto.language_dto import LanguageDTO
 
 
-class UserSerializer:
+class LanguageSerializer:
 
     @staticmethod
     def dump(model: Language) -> Optional[Dict[str, Any]]:

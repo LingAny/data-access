@@ -12,7 +12,7 @@ class LanguageRepository(Repository[LanguageDTO]):
     def __init__(self, context: DataContext) -> None:
         self._context = context
 
-    def get_by_id(self, uid: UUID) -> LanguageDTO:
+    def get_by_id(self, uid: str) -> LanguageDTO:
         data = self._context.callproc('get_language_by_id', [uid])
         return create_one(LanguageDTO, data)
 
