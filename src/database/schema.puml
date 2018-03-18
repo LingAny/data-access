@@ -1,0 +1,23 @@
+@startuml
+
+languages: language_id [UUID]
+languages: title [UUID]
+
+reflection: reflection_id [UUID]
+reflection: title [TEXT]
+reflection: native_language_id [UUID]
+reflection: foreign_language_id [UUID]
+reflection -> languages: native, foreign
+
+categories: category_id [UUID]
+categories: reflection_id [UUID]
+categories: title [TEXT]
+categories --> reflection
+
+training: training_id [UUID]
+training: category_id [UUID]
+training: native_word [TEXT]
+training: foreign_word [TEXT]
+training --> categories
+
+@enduml
