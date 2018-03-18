@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION add_category(
+  p_category_id UUID,
+  p_reflection_id UUID,
+  p_title TEXT)
+
+RETURNS void
+AS
+$BODY$
+  BEGIN
+    INSERT INTO categories (category_id, reflection_id, title)
+    VALUES (p_category_id, p_reflection_id, p_title);
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
