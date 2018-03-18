@@ -24,15 +24,7 @@
     margin: 20px 0;
 }
 
-.login-block__label {
-    color: lightgray;
-    display: block;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 17px;
-    text-align: left;
-}
-
-.login-password__label {
+.login-password__label, .login-name__label {
     color: lightgray;
     display: block;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
