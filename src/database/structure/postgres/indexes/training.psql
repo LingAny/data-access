@@ -1,0 +1,2 @@
+CREATE INDEX training_category_slug_idx
+  ON training (category_id);
