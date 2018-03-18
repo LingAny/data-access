@@ -1,0 +1,17 @@
+@startuml
+
+word: word_id [UUID]
+word: text [TEXT]
+
+word_translate: word_translate_id [UUID]
+word_translate: word_id [UUID]
+word_translate: language_id [UUID]
+word_translate: translate_1 [text]
+word_translate: translate_2 [text]
+word_translate --> word
+word_translate --> languages
+
+languages: language_id [UUID]
+languages: title [UUID]
+
+@enduml
