@@ -1,0 +1,14 @@
+FROM python:3
+
+COPY ./requirements.txt /requirements.txt
+COPY ./requirements-linter.txt /requirements-linter.txt
+
+RUN pip install -r /requirements.txt
+RUN pip install -r /requirements-linter.txt
+
+RUN rm -rf /prereqs
+
+COPY . /netutils
+WORKDIR /netutils
+
+CMD ["bash", "/netutils/linter.sh"]

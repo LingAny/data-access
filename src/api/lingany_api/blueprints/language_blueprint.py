@@ -1,38 +1,47 @@
-from flask import Blueprint, request, Response, json
-from injector import inject, singleton
-import ujson
+import logging
+from uuid import UUID
 
-from lingany_api.blueprints.base_blueprint import BaseBlueprint
-from lingany_api.serializers.language_serializer import LanguageSerializer
-from lingany_api.services.language_service import LanguageService
+from dateutil import parser
+from flask import Blueprint, Response, request, abort
+from injector import singleton, inject
+
+from apiutils import BaseBlueprint, return_many
+from sqlutils import ExpandSet, EmptyExpandSet
 
 
 @singleton
-class LanguageBlueprint(BaseBlueprint):
+class LanguageBlueprint(BaseBlueprint[LanguageService]):
 
     @inject
-    def __init__(self) -> None:
-        super().__init__()
-        self._service = LanguageService()
-        self._serializer = LanguageSerializer()
+    def __init__(self, service: LanguageService) -> None:
+        super().__init__(service)
 
     @property
     def _name(self) -> str:
-        return 'languages'
+        return 'users'
 
     def _create_blueprint(self) -> Blueprint:
         blueprint = Blueprint(self._name, __name__)
 
         @blueprint.route('/<uid>', methods=['GET'])
         def _get_by_id(uid: str):
-            language = self._service.get_by_id(uid)
-            data = self._serializer.dump(language)
-            return Response(response=ujson.dumps(data), status=200, mimetype='application/json')
+            expand = ExpandSet.load(request.args.get('expand'))
+            return self._get_by_id(UUID(uid), expand)
 
         @blueprint.route('/', methods=['POST'])
         def _add():
-            data = ujson.loads(request.data)
-            language_dto = self._serializer.load(data)
-            self._service.add(language_dto)
+            return self._add()
+
+        @blueprint.route('/', methods=['GET'])
+        def _get_all():
+            raise NotImplementedError
+
+        @blueprint.route('/<uid>', methods=['DELETE'])
+        def _delete(uid: str):
+            raise NotImplementedError
+
+        @blueprint.route('/', methods=['PUT'])
+        def _update():
+            raise NotImplementedError
 
         return blueprint

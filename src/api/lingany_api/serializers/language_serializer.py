@@ -3,22 +3,29 @@ from uuid import UUID
 
 from flask import url_for
 
+from apiutils import Serializer
+from sqlutils import AbstractExpandSet
+
 from lingany_api.models.language import Language
 from lingany_api.persistance.dto.language_dto import LanguageDTO
 
 
-class LanguageSerializer:
+class LanguageSerializer(Serializer):
 
     @staticmethod
-    def dump(model: Language) -> Optional[Dict[str, Any]]:
+    def dump(model: Language, expand: AbstractExpandSet) -> Optional[Dict[str, Any]]:
         if not model:
             return None
 
         data = {
             'href': url_for('languages._get_by_id', uid=model.uid),
             'id': model.uid,
-            'title': model.title
         }
+
+        if model.is_loaded:
+            data.update({
+                'title': None if model.title is None else model.title
+            })
 
         return data
 
