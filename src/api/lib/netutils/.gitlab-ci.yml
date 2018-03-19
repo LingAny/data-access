@@ -1,0 +1,47 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: "recursive"
+
+stages:
+  - lint
+  - build
+  - cleanup
+
+lint:
+  stage: lint
+  script:
+    - docker build -t netutils_lint --build-arg HTTP_PROXY=http://10.100.122.141:3128 --build-arg HTTPS_PROXY=http://10.100.122.141:3128 --build-arg FTP_PROXY=http://10.100.122.141:3128 -f ./Dockerfile-linter ./
+    - docker run --name netutils_lint netutils_lint
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - netutils-*-py3-none-any.whl
+    expire_in: 1 day
+  script:
+    - docker build -t netutils_build --build-arg HTTP_PROXY=http://10.100.122.141:3128 --build-arg HTTPS_PROXY=http://10.100.122.141:3128 --build-arg FTP_PROXY=http://10.100.122.141:3128 -f ./Dockerfile-build ./
+    - docker run --name netutils_build -v `pwd`:/tmp/dist netutils_build
+
+remove_lint:
+  stage: cleanup
+  when: always
+  script:
+    - docker rm -vf netutils_lint
+
+remove_lint_image:
+  stage: cleanup
+  when: always
+  script:
+    - docker rmi -f netutils_lint
+
+remove_build:
+  stage: cleanup
+  when: always
+  script:
+    - docker rm -vf netutils_build
+
+remove_build_image:
+  stage: cleanup
+  when: always
+  script:
+    - docker rmi -f netutils_build

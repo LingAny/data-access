@@ -1,5 +1,5 @@
 from sqlutils.errors.sql_error import SqlError
 
 
-class NotNUllViolation(SqlError):
+class RestrictViolationError(SqlError):
     pass
