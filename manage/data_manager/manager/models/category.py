@@ -1,16 +1,22 @@
-from typing import Set
+from uuid import UUID
+
+from manager.models.reflection import Reflection
 
 
 class Category(object):
-
-    def __init__(self, title: str, values: Set[str]) -> None:
+    def __init__(self, uid: UUID, title: str, reflection: Reflection) -> None:
+        self._uid = uid
         self._title = title
-        self._values = values
+        self._reflection = reflection
+
+    @property
+    def uid(self) -> UUID:
+        return self._uid
 
     @property
     def title(self) -> str:
         return self._title
 
     @property
-    def values(self) -> Set[str]:
-        return self._values
+    def reflection(self) -> Reflection:
+        return self._reflection

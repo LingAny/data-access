@@ -1,7 +1,8 @@
 import logging
 from typing import List
 
-from manager.models.category import Category
+
+from manager.models.external_category import ExternalCategory
 from manager.services.reader import FolderReader, LineReader
 
 logging.getLogger().setLevel(logging.INFO)
@@ -10,7 +11,7 @@ logging.getLogger().setLevel(logging.INFO)
 class CategoryService(object):
 
     @staticmethod
-    def get_supported_categories(path: str) -> List[Category]:
+    def get_supported_categories(path: str) -> List[ExternalCategory]:
         files = FolderReader.get_files(path)
         logging.info(f"[get_supported_categories] files: {files}")
         categories = []
@@ -21,6 +22,6 @@ class CategoryService(object):
                 continue
             title = data[0]
             values = set(data[1:])
-            categories.append(Category(title=title, values=values))
+            categories.append(ExternalCategory(title=title, values=values))
 
         return categories
