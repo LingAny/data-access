@@ -1,3 +1,4 @@
+import csv
 import logging
 from typing import List, Dict
 from uuid import uuid4
@@ -21,11 +22,11 @@ def setup(conf: Configure, languages: List[Language], reflections: List[Reflecti
     logging.info(f"setup categories...")
     ext_categories = CategoryService.get_supported_categories(conf.list_path + 'categories/')
     categories = convert_external_categories(ext_categories, languages, reflections)
+    save_categories(conf=conf, categories=categories)
 
 
 def convert_external_categories(external: List[ExternalCategory], languages: List[Language],
                                 reflections: List[Reflection]) -> List[Category]:
-
     categories: List[Category] = []
 
     for ext in external:
@@ -42,7 +43,6 @@ def convert_external_categories(external: List[ExternalCategory], languages: Lis
 
 
 def translate_title(title: str, languages: List[Language]) -> Dict[str, str]:
-
     titles: Dict[str, str] = dict()
 
     for lang in languages:
@@ -52,6 +52,7 @@ def translate_title(title: str, languages: List[Language]) -> Dict[str, str]:
             })
 
         else:
+            logging.info(f"translating '{title}' to {lang.title} ...")
             translated_title = translator.translate_text(title, 'ru', lang.code)
             titles.update({
                 lang.code: translated_title
@@ -59,5 +60,13 @@ def translate_title(title: str, languages: List[Language]) -> Dict[str, str]:
     return titles
 
 
-def save_categories(categories: List[ExternalCategory], reflections: List[Reflection]):
-    pass
+def save_categories(conf: Configure, categories: List[Category]):
+    filename = f'{conf.output_categories_path}/all_categories.csv'
+    file = open(filename, 'w')
+    writer = csv.writer(file, delimiter=',')
+    writer.writerow(['uid:uuid', 'title:text', 'reflection_id:uuid'])
+
+    for category in categories:
+        writer.writerow([category.uid.hex, category.title, category.reflection.uid.hex])
+
+    file.close()

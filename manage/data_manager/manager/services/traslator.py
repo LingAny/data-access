@@ -19,7 +19,7 @@ class Translator(object):
         response = urllib.request.urlopen(url)
         answer = response.read().decode('utf-8').replace("'", '"')
         data = json.loads(answer)
-        return data.get('text')
+        return data.get('text')[0]
 
     def translate_text(self, text, native_language: str, foreign_language: str) -> str:
         key = '?key=' + self._conf.key
@@ -34,4 +34,4 @@ class Translator(object):
         with urllib.request.urlopen(req, data=data) as f:
             resp = f.read().decode('utf-8').replace("'", '"')
             data = json.loads(resp)
-            return data.get('text')
+            return data.get('text')[0]
