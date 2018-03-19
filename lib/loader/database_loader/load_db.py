@@ -30,6 +30,7 @@ def main():
 
     load_languages()
     load_reflections()
+    load_categories()
 
     logging.info('completed')
 
@@ -62,6 +63,21 @@ def load_reflections():
             context.callproc('add_reflection', [UUID(row[0]), row[1], UUID(row[2]), UUID(row[3])])
 
     logging.info("completed load reflections")
+
+
+def load_categories():
+    logging.info('load categories')
+    files = get_files(path + "/structure/dict/categories")
+    for filename in files:
+        msg = 'load categories from ' + filename
+        logging.info(msg)
+        data = CSVReader.read(filename)
+        for i in range(1, len(data)):
+            row = data[i]
+            logging.info('load ' + row[1])
+            context.callproc('add_category', [UUID(row[0]), UUID(row[2]), row[1]])
+
+    logging.info("completed load categories")
 
 
 def load_data(data: List[List[Any]]):
