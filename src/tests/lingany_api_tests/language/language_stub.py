@@ -11,7 +11,7 @@ class LanguageStub(ApiStub):
 
     @property
     def root(self) -> str:
-        return f"http://{os.environ['SERVER_NAME']}/languages"
+        return f"http://{os.environ['SERVER_NAME']}/api/v1/lingany-da/languages"
 
     def _generate(self, **kwargs) -> Dict[str, Any]:
         return {
