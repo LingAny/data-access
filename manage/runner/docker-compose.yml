@@ -1,0 +1,10 @@
+version: "3"
+services:
+
+  data_manager:
+    build:
+      context: ../data_manager
+    volumes:
+      - ../../src/database/structure/dict:/tmp/structure/dict
+      - ../../src/database/structure/list:/tmp/structure/list
+    env_file: .env
