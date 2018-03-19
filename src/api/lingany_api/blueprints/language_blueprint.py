@@ -18,7 +18,7 @@ class LanguageBlueprint(BaseBlueprint[LanguageService]):
 
     @property
     def _name(self) -> str:
-        return 'users'
+        return 'languages'
 
     @property
     def _serializer(self) -> LanguageSerializer:
