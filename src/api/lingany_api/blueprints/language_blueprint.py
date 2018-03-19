@@ -1,12 +1,12 @@
-import logging
 from uuid import UUID
 
-from dateutil import parser
-from flask import Blueprint, Response, request, abort
+from flask import Blueprint, request
 from injector import singleton, inject
 
-from apiutils import BaseBlueprint, return_many
-from sqlutils import ExpandSet, EmptyExpandSet
+from apiutils import BaseBlueprint
+from lingany_api.serializers.language_serializer import LanguageSerializer
+from lingany_api.services.language_service import LanguageService
+from sqlutils import ExpandSet
 
 
 @singleton
@@ -20,6 +20,10 @@ class LanguageBlueprint(BaseBlueprint[LanguageService]):
     def _name(self) -> str:
         return 'users'
 
+    @property
+    def _serializer(self) -> LanguageSerializer:
+        return LanguageSerializer()
+
     def _create_blueprint(self) -> Blueprint:
         blueprint = Blueprint(self._name, __name__)
 
@@ -31,17 +35,5 @@ class LanguageBlueprint(BaseBlueprint[LanguageService]):
         @blueprint.route('/', methods=['POST'])
         def _add():
             return self._add()
-
-        @blueprint.route('/', methods=['GET'])
-        def _get_all():
-            raise NotImplementedError
-
-        @blueprint.route('/<uid>', methods=['DELETE'])
-        def _delete(uid: str):
-            raise NotImplementedError
-
-        @blueprint.route('/', methods=['PUT'])
-        def _update():
-            raise NotImplementedError
 
         return blueprint

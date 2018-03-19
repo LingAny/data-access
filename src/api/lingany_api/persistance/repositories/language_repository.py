@@ -1,9 +1,8 @@
 from injector import inject
-from typing import Any, List
-from uuid import UUID
+from typing import Any
 
-from sqlutils import Repository, DataContext, create_one, create_many
 from lingany_api.persistance.dto.language_dto import LanguageDTO
+from sqlutils import Repository, DataContext, create_one
 
 
 class LanguageRepository(Repository[LanguageDTO]):
@@ -19,7 +18,7 @@ class LanguageRepository(Repository[LanguageDTO]):
     def add(self, entity: LanguageDTO) -> None:
         self._context.callproc('add_language', [entity.uid, entity.title])
 
-    def get_all(self):
+    def get_all(self) -> None:
         raise NotImplementedError
 
     def update(self, entity) -> None:

@@ -10,6 +10,7 @@ class LanguageDTO(Entity):
         return 'language_id'
 
     def __init__(self, uid: UUID = None, title: str = None) -> None:
+
         super().__init__(uid)
         self._title = title
 

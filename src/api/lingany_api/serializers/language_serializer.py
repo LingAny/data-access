@@ -4,10 +4,10 @@ from uuid import UUID
 from flask import url_for
 
 from apiutils import Serializer
+from lingany_api.persistance.dto.language_dto import LanguageDTO
 from sqlutils import AbstractExpandSet
 
 from lingany_api.models.language import Language
-from lingany_api.persistance.dto.language_dto import LanguageDTO
 
 
 class LanguageSerializer(Serializer):

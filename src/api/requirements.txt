@@ -10,3 +10,4 @@ injector
 python-dateutil
 statsd
 flask_sqlalchemy
+psycopg2
