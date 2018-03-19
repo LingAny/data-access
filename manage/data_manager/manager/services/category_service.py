@@ -4,12 +4,15 @@ from typing import List
 from manager.models.category import Category
 from manager.services.reader import FolderReader, LineReader
 
+logging.getLogger().setLevel(logging.INFO)
+
 
 class CategoryService(object):
 
     @staticmethod
     def get_supported_categories(path: str) -> List[Category]:
         files = FolderReader.get_files(path)
+        logging.info(f"[get_supported_categories] files: {files}")
         categories = []
         for filename in files:
             logging.info(f'load category from {filename}')
