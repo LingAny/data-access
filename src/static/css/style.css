@@ -1,0 +1,101 @@
+.login-block {
+    height: 100%;
+    margin-top: 100px;
+    width: 100%;
+}
+
+.login-block__label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 45px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.login-block__form {
+    display: block;
+    margin: 100px auto;
+    text-align: center;
+    width: 20%;
+}
+
+.login-block {
+    margin: 20px 0;
+}
+
+.login-password__label, .login-name__label {
+    color: lightgray;
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 17px;
+    text-align: left;
+}
+
+.login-password__pwd , .login-name__username {
+    border-width: 0 0 1px 0;
+    border-color: gray;
+    border-style: solid;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    width: 100%;
+}
+
+.login__submit {
+    background-color: dodgerblue;
+    border-radius: 3px;
+    border: none;
+    color: aliceblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 25px;
+    padding: 10px 10px;
+}
+
+.login__submit:disabled {
+    background: gray;
+}
+
+
+.translate-container {
+    width: 40%;
+    margin-left: 30%;
+    display: grid;
+    grid-template-areas:
+        'header header header header'
+        'label1 selector1 label2 selector2'
+        '. footer footer .';
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.translate-container__label1 { grid-area: label1; }
+.translate-container__selector1 { grid-area: selector1; }
+.translate-container__label2 { grid-area: label2; }
+.translate-container__selector2 { grid-area: selector2; }
+.translate-container__input { grid-area: header; }
+.translate-container__submit { grid-area: footer; }
+
+
+.translate-container__input, .translate-container__submit,
+.translate-container__selector1, .translate-container__selector2 {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+.translate-container__submit {
+    background-color: dodgerblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: aliceblue;
+}
+
+.translate-container__label1, .translate-container__label2 {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 18px;
+}
