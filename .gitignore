@@ -2,6 +2,7 @@ deploy/.vagrant
 .idea
 *.db
 .DS_Store
+.vscode
 venv
 env
 environments
