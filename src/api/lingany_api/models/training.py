@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from lingany_api.models.language import Language
+from lingany_api.models.category import Category
 from sqlutils import Model
 
 
@@ -8,25 +8,25 @@ class Training(Model):
 
     def __init__(self, uid: UUID) -> None:
         super().__init__(uid)
-        self._title: str = None
-        self._native_language: Language = None
-        self._foreign_language: Language = None
+        self._category: Category = None
+        self._native_word: str = None
+        self._foreign_word: str = None
 
     @property
-    def title(self) -> str:
-        return self._title
+    def category(self) -> Category:
+        return self._category
 
     @property
-    def native_language(self) -> Language:
-        return self._native_language
+    def native_word(self) -> str:
+        return self._native_word
 
     @property
-    def foreign_language(self) -> Language:
-        return self._foreign_language
+    def foreign_word(self) -> str:
+        return self._foreign_word
 
-    def fill(self, title: str, native_language: Language, foreign_language: Language) -> "Training":
-        self._title = title
-        self._native_language = native_language
-        self._foreign_language = foreign_language
+    def fill(self, category: Category, native_word: str, foreign_word: str) -> "Training":
+        self._category = category
+        self._native_word = native_word
+        self._foreign_word = foreign_word
         self._filled()
         return self
