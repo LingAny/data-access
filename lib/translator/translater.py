@@ -7,7 +7,7 @@ class Translator(object):
     def __init__(self, native_language=None, foreign_language=None) -> None:
         self._host = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
         self._key = 'trnsl.1.1.20180319T065216Z.ef55a2768a010315.6ad80367b78fed4fc538c3de84288d98d5553e91'
-        if native_language == None: 
+        if native_language == None:
             self._nlang = "ru"
         else:
             self._nlang = native_language
@@ -16,7 +16,7 @@ class Translator(object):
         else:
             self._flang = foreign_language
 
-    def translate_word(self, text, native_language="en", foreign_language="ru"):
+    def translate_word(self, text, native_language="ru", foreign_language="ru"):
         key = '?key=' + self._key
         text = '&text=' + text 
         lang = '&lang=' + native_language + '-' + foreign_language

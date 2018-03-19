@@ -2,20 +2,18 @@ import json
 import urllib.request
 import urllib.parse
 
-import requests
 
 from manager.conf.yandex_translator_conf import YandexTranslatorConf
-from manager.models.language import Language
 
 
 class Translator(object):
     def __init__(self, conf: YandexTranslatorConf) -> None:
         self._conf = conf
 
-    def translate_word(self, text: str, native_language: Language, foreign_language: Language) -> str:
+    def translate_word(self, text: str, native_language: str, foreign_language: str) -> str:
         key = '?key=' + self._conf.key
         text = '&text=' + text
-        lang = '&lang=' + native_language.code + '-' + foreign_language.code
+        lang = '&lang=' + native_language + '-' + foreign_language
         format = '&format=plain'
         url = self._conf.url + key + text + lang + format
         response = urllib.request.urlopen(url)
@@ -23,9 +21,9 @@ class Translator(object):
         data = json.loads(answer)
         return data.get('text')
 
-    def translate_text(self, text, native_language: Language, foreign_language: Language) -> str:
+    def translate_text(self, text, native_language: str, foreign_language: str) -> str:
         key = '?key=' + self._conf.key
-        lang = '&lang=' + native_language.code + '-' + foreign_language.code
+        lang = '&lang=' + native_language + '-' + foreign_language
         value = {
             'text': text
         }

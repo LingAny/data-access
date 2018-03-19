@@ -7,7 +7,6 @@ class EnvYandexTranslatorConfFactory(object):
 
     @staticmethod
     def create() -> YandexTranslatorConf:
-        url = ""
         url = os.environ.get('YANDEX_TRANSLATOR_URL')
         key = os.environ.get('YANDEX_TRANSLATOR_KEY')
         return YandexTranslatorConf(url=url, key=key)
