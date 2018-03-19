@@ -20,19 +20,6 @@ class CSVReader(object):
             return data
 
 
-class LanguagesReader(object):
-
-    @staticmethod
-    def read(filename) -> List[str]:
-        with open(filename, 'r') as file:
-            data = []
-            for line in file:
-                if line == '':
-                    continue
-                data.append(line.strip())
-            return data
-
-
 path = os.environ.get('DATABASE')
 context = EnvDataContextFactory().create_data_context()
 logging.getLogger().setLevel(logging.INFO)
@@ -41,23 +28,35 @@ logging.getLogger().setLevel(logging.INFO)
 def main():
     logging.info('load database...')
 
-    languages = LanguagesReader.read(path + "/structure/list/language_list.txt")
-    load_languages(languages=languages)
-
-    files = get_files(path + "/structure/dict")
-
-    for filename in files:
-        data = CSVReader.read(filename)
-        load_data(data)
+    load_languages()
+    load_reflections()
 
     logging.info('completed')
 
 
-def load_languages(languages: List[str]):
+def load_languages():
     logging.info("load languages...")
-    for lang in languages:
-        context.callproc('add_language', [uuid4(), lang])
+
+    languages = CSVReader.read(path + "/structure/dict/languages.csv")
+
+    for i in range(1, len(languages)):
+        row = languages[i]
+        msg = 'load ' + row[1] + ' language'
+        logging.info(msg)
+        context.callproc('add_language', [UUID(row[0]), row[1]])
+
     logging.info("completed load languages")
+
+
+def load_reflections():
+    logging.info('load reflections')
+    files = get_files(path + "/structure/dict/reflections")
+
+    for filename in files:
+        msg = 'load reflections from ' + filename
+        logging.info(msg)
+        data = CSVReader.read(filename)
+        # load_data(data)
 
 
 def load_data(data: List[List[Any]]):
@@ -65,7 +64,7 @@ def load_data(data: List[List[Any]]):
 
 
 def get_files(path):
-    return [f for f in os.listdir(path) if isfile(join(path, f))]
+    return [join(path, f) for f in os.listdir(path) if isfile(join(path, f))]
 
 
 if __name__ == '__main__':
