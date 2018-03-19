@@ -15,7 +15,7 @@ class LanguageService(object):
             return languages
         for i in range(1, len(data)):
             row = data[i]
-            lang = Language(uid=UUID(row[0]), title=row[1])
+            lang = Language(uid=UUID(row[0]), title=row[1], code=row[2])
             languages.append(lang)
 
         return languages
