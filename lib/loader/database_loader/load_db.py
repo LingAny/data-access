@@ -56,7 +56,12 @@ def load_reflections():
         msg = 'load reflections from ' + filename
         logging.info(msg)
         data = CSVReader.read(filename)
-        # load_data(data)
+        for i in range(1, len(data)):
+            row = data[i]
+            logging.info('load ' + row[1])
+            context.callproc('add_reflection', [UUID(row[0]), row[1], UUID(row[2]), UUID(row[3])])
+
+    logging.info("completed load reflections")
 
 
 def load_data(data: List[List[Any]]):
