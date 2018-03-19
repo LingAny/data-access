@@ -12,7 +12,7 @@ from manager.services.reflection_service import ReflectionService
 logging.getLogger().setLevel(logging.INFO)
 
 
-def setup(conf: Configure):
+def setup(conf: Configure) -> List[Reflection]:
     logging.info(f'setup')
     languages = LanguageService.get_supported_languages(conf.dict_path + '/languages.csv')
     for lang in languages:
@@ -21,6 +21,7 @@ def setup(conf: Configure):
     reflections = ReflectionService.get_supported_reflections(conf.dict_path + '/reflections', languages)
     new_supported_reflections = create_new_supported_reflections(languages=languages, reflections=reflections)
     save_new_supported_reflection(languages=languages, reflections=new_supported_reflections, conf=conf)
+    return new_supported_reflections
 
 
 def save_new_supported_reflection(languages: List[Language], reflections: List[Reflection], conf: Configure):
