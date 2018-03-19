@@ -13,7 +13,7 @@ from lingany_api.models.language import Language
 class LanguageSerializer(Serializer):
 
     @staticmethod
-    def dump(model: Language, expand: AbstractExpandSet) -> Optional[Dict[str, Any]]:
+    def dump(model: Language, expand: AbstractExpandSet=None) -> Optional[Dict[str, Any]]:
         if not model:
             return None
 
