@@ -1,3 +1,4 @@
+import logging
 from typing import List, Optional, Any
 from uuid import UUID
 
@@ -55,5 +56,5 @@ class ReflectionService(object):
     def _get_lang_by_id(cls, lang_id: UUID, supported_lang: List[Language]) -> Optional[Language]:
         for lang in supported_lang:
             if lang_id == lang.uid:
-                return
+                return lang
         return None

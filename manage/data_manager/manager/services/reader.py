@@ -21,4 +21,4 @@ class FolderReader(object):
 
     @staticmethod
     def get_files(path: str) -> List[str]:
-        return [f for f in os.listdir(path) if isfile(join(path, f))]
+        return [join(path, f) for f in os.listdir(path) if isfile(join(path, f))]

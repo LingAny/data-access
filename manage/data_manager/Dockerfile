@@ -16,7 +16,7 @@ ENV LANG_FILENAME ''
 ENV DICT_PATH ''
 ENV LIST_PATH ''
 
-RUN mkdir -p /tmp/structure/output/dir/reflections
-RUN mkdir -p /tmp/structure/output/dir/categories
+RUN mkdir -p /tmp/structure/output/dict/reflections
+RUN mkdir -p /tmp/structure/output/dict/categories
 
 CMD python3.6 main.py

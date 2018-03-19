@@ -18,7 +18,7 @@ def setup(conf: Configure) -> List[Reflection]:
     for lang in languages:
         logging.info(f'Supported language: {lang.title}')
 
-    reflections = ReflectionService.get_supported_reflections(conf.dict_path + '/reflections', languages)
+    reflections = ReflectionService.get_supported_reflections(conf.dict_path + 'reflections/', languages)
     new_supported_reflections = create_new_supported_reflections(languages=languages, reflections=reflections)
     save_new_supported_reflection(languages=languages, reflections=new_supported_reflections, conf=conf)
     return new_supported_reflections
@@ -41,7 +41,7 @@ def save_new_supported_reflection(languages: List[Language], reflections: List[R
             native_to_foreign_ref = ReflectionService.get_reflection_for_foreign_lang(foreign_lang.uid,
                                                                                       native_to_many_ref)
 
-            logging.info(f'save {native_to_foreign_ref.title} into {conf.output_reflections_path}/{filename} ...')
+            logging.debug(f'save {native_to_foreign_ref.title} into {conf.output_reflections_path}/{filename} ...')
             writer.writerow([native_to_foreign_ref.uid.hex,
                              native_to_foreign_ref.title,
                              native_to_foreign_ref.native_lang.uid.hex,
