@@ -3,8 +3,11 @@ import os
 from typing import Any, Dict
 from uuid import uuid4
 
+from apiutils.request import Request
+from testutils.stubs.api_stub import ApiStub
 
-class UserStub:
+
+class LanguageStub(ApiStub):
 
     @property
     def root(self) -> str:
