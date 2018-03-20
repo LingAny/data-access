@@ -4,25 +4,25 @@ from flask import Blueprint, request
 from injector import singleton, inject
 
 from apiutils import BaseBlueprint
-from lingany_api.serializers.language_serializer import LanguageSerializer
-from lingany_api.services.language_service import LanguageService
+from lingany_api.serializers.training_serializer import TrainingSerializer
+from lingany_api.services.training_service import TrainingService
 from sqlutils import ExpandSet
 
 
 @singleton
-class LanguageBlueprint(BaseBlueprint[LanguageService]):
+class TrainingBlueprint(BaseBlueprint[TrainingService]):
 
     @inject
-    def __init__(self, service: LanguageService) -> None:
+    def __init__(self, service: TrainingService) -> None:
         super().__init__(service)
 
     @property
     def _name(self) -> str:
-        return 'languages'
+        return 'training'
 
     @property
-    def _serializer(self) -> LanguageSerializer:
-        return LanguageSerializer()
+    def _serializer(self) -> TrainingSerializer:
+        return TrainingSerializer()
 
     def _create_blueprint(self) -> Blueprint:
         blueprint = Blueprint(self._name, __name__)

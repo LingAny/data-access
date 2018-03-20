@@ -1,20 +1,17 @@
 from injector import singleton, inject
-from typing import Optional, List
+from typing import Optional
 from uuid import UUID
 
-from sqlutils import AbstractExpandSet, Service, EmptyExpandSet, ExpandSet
-
 from lingany_api.converters.language_converter import LanguageConverter
-from lingany_api.models.language import Language
 from lingany_api.persistance.dto.language_dto import LanguageDTO
+from sqlutils import AbstractExpandSet, Service
+
+from lingany_api.models.language import Language
 from lingany_api.persistance.repositories.language_repository import LanguageRepository
 
 
 @singleton
 class LanguageService(Service):
-    @staticmethod
-    def _clear_cache():
-        pass
 
     @inject
     def __init__(self, repo: LanguageRepository) -> None:
@@ -31,3 +28,16 @@ class LanguageService(Service):
 
         language = self._converter.convert(entity)
         return language
+
+    def get_all(self, expand: AbstractExpandSet):
+        raise NotImplementedError
+
+    def update(self, entity) -> None:
+        raise NotImplementedError
+
+    def delete(self, uid) -> None:
+        raise NotImplementedError
+
+    @staticmethod
+    def _clear_cache():
+        pass

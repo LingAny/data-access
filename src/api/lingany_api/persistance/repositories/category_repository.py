@@ -1,22 +1,22 @@
 from injector import inject
 from typing import Any
 
-from lingany_api.persistance.dto.language_dto import LanguageDTO
+from lingany_api.persistance.dto.category_dto import CategoryDTO
 from sqlutils import Repository, DataContext, create_one
 
 
-class LanguageRepository(Repository[LanguageDTO]):
+class CategoryRepository(Repository[CategoryDTO]):
 
     @inject
     def __init__(self, context: DataContext) -> None:
         self._context = context
 
-    def get_by_id(self, uid: str) -> LanguageDTO:
-        data = self._context.callproc('get_language_by_id', [uid])
-        return create_one(LanguageDTO, data)
+    def get_by_id(self, uid: str) -> CategoryDTO:
+        data = self._context.callproc('get_category_by_id', [uid])
+        return create_one(CategoryDTO, data)
 
-    def add(self, entity: LanguageDTO) -> None:
-        self._context.callproc('add_language', [entity.uid, entity.title])
+    def add(self, entity: CategoryDTO) -> None:
+        self._context.callproc('add_category', [entity.uid, entity.reflection_id, entity.title])
 
     def get_all(self) -> None:
         raise NotImplementedError
