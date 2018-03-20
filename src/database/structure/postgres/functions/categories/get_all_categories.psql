@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_category_by_id()
+CREATE OR REPLACE FUNCTION get_all_categories()
 
 RETURNS TABLE(category_id UUID,
               reflection_id UUID,
@@ -7,8 +7,8 @@ AS
 $BODY$
   BEGIN
     RETURN QUERY
-    SELECT category_id, reflection_id, title
-    FROM categories;
+    SELECT ct.category_id, ct.reflection_id, ct.title
+    FROM categories ct;
   END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;

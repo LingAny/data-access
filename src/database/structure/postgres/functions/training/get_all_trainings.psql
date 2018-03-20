@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_training_by_id()
+CREATE OR REPLACE FUNCTION get_all_trainings()
 
 RETURNS TABLE(training_id UUID,
               category_id UUID,
@@ -8,8 +8,8 @@ AS
 $BODY$
   BEGIN
     RETURN QUERY
-    SELECT training_id, category_id, native_word, foreign_word
-    FROM training;
+    SELECT t.training_id, t.category_id, t.native_word, t.foreign_word
+    FROM training t;
   END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;

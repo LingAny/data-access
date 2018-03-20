@@ -19,7 +19,7 @@ class CategoryRepository(Repository[CategoryDTO]):
         self._context.callproc('add_category', [entity.uid, entity.reflection_id, entity.title])
 
     def get_all(self) -> List[CategoryDTO]:
-        data = self._context.callproc('get_category_by_id', [])
+        data = self._context.callproc('get_all_categories', [])
         return create_many(CategoryDTO, data)
 
     def update(self, entity) -> None:

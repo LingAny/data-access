@@ -33,7 +33,7 @@ class CategoryTestCase(unittest.TestCase):
         self.assertEqual(201, response.status_code)
         response, list_obj = self._stub.get_all()
         self.assertEqual(200, response.status_code)
-        self.assertGreater(len(list_obj) > 0)
+        self.assertGreater(len(list_obj), 0)
 
     def tearDown(self):
         self._stub.clear()

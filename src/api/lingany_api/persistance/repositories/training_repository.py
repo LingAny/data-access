@@ -1,8 +1,8 @@
 from injector import inject
-from typing import Any
+from typing import Any, List
 
 from lingany_api.persistance.dto.training_dto import TrainingDTO
-from sqlutils import Repository, DataContext, create_one
+from sqlutils import Repository, DataContext, create_one, create_many
 
 
 class TrainingRepository(Repository[TrainingDTO]):
@@ -19,8 +19,9 @@ class TrainingRepository(Repository[TrainingDTO]):
         self._context.callproc('add_training', [entity.uid, entity.category_id,
                                                 entity.native_word, entity.foreign_word])
 
-    def get_all(self) -> None:
-        raise NotImplementedError
+    def get_all(self) -> List[TrainingDTO]:
+        data = self._context.callproc('get_all_trainings', [])
+        return create_many(TrainingDTO, data)
 
     def update(self, entity) -> None:
         raise NotImplementedError

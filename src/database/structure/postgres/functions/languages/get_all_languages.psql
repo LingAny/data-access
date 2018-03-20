@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_language_by_id()
+CREATE OR REPLACE FUNCTION get_all_languages()
 
 RETURNS TABLE(language_id UUID,
               title TEXT)
@@ -6,8 +6,8 @@ AS
 $BODY$
   BEGIN
     RETURN QUERY
-    SELECT language_id, title
-    FROM languages;
+    SELECT l.language_id, l.title
+    FROM languages l;
   END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
