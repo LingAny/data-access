@@ -19,5 +19,5 @@ setup(
     classifiers=[
         "Development Status :: 1 - Planning",
         "Topic :: API"
-    ],
+    ], install_requires=['requests']
 )

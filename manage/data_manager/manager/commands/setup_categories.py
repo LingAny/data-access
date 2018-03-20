@@ -31,12 +31,12 @@ def convert_external_categories(external: List[ExternalCategory], languages: Lis
 
     for ext in external:
 
+        logging.info(f'[convert_external_categories] convert category: {ext.title}')
         titles = translate_title(title=ext.title, languages=languages)
         values = translate_values(values=ext.values, languages=languages)
 
         for ref in reflections:
             title = titles.get(ref.native_lang.code)
-            logging.info(f"language: {ref.native_lang.code} title: {title}")
             category = Category(uid=uuid4(), title=title, reflection=ref)
             categories.append(category)
 
@@ -53,7 +53,7 @@ def translate_title(title: str, languages: List[Language]) -> Dict[str, str]:
             })
 
         else:
-            logging.info(f"translating '{title}' to {lang.title} ...")
+            logging.info(f"translating category name to {lang.title}")
             translated_title = translator.translate_text(title, 'ru', lang.code)
             titles.update({
                 lang.code: translated_title
@@ -71,12 +71,10 @@ def translate_values(values: Set[str], languages: List[Language]) -> Dict[str, S
             })
 
         else:
-            logging.info(f"translating values {values} to {lang.title} ...")
+            logging.info(f"translating category values to {lang.title}")
             translated_values = set()
             for value in values:
-                logging.info(f"try translate {value} to {lang.title} ...")
-                word = translator.translate_text(value, 'ru', lang.code)
-                logging.info(f"{value} on {lang.title} is {word}")
+                word = translator.translate_word(value, 'ru', lang.code)
                 translated_values.add(word)
 
             data.update({
