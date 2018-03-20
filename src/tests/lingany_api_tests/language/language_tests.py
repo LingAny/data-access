@@ -24,6 +24,13 @@ class LanguageTestCase(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self._check(obj, sut)
 
+    def test_get_all(self):
+        response, sut = self._stub.create()
+        self.assertEqual(201, response.status_code)
+        response, list_obj = self._stub.get_all()
+        self.assertEqual(200, response.status_code)
+        self.assertGreater(len(list_obj), 0)
+
     def tearDown(self):
         self._stub.clear()
 

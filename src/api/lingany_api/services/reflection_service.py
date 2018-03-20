@@ -10,16 +10,12 @@ from sqlutils import AbstractExpandSet, Service
 
 
 @singleton
-class ReflectionService(Service):
+class ReflectionService(Service[Reflection, ReflectionDTO, ReflectionRepository]):
 
     @inject
     def __init__(self, repo: ReflectionRepository) -> None:
         super().__init__(repo)
         self._converter = ReflectionConverter()
-
-    def get_by_id(self, uid: UUID, expand: AbstractExpandSet) -> Reflection:
-        reflection_dto = self._repo.get_by_id(uid)
-        return self._convert(reflection_dto, expand)
 
     def _convert(self, entity: ReflectionDTO, expand: AbstractExpandSet) -> Optional[Reflection]:
         if not entity:
@@ -27,15 +23,6 @@ class ReflectionService(Service):
 
         reflection = self._converter.convert(entity)
         return reflection
-
-    def get_all(self, expand: AbstractExpandSet):
-        raise NotImplementedError
-
-    def update(self, entity) -> None:
-        raise NotImplementedError
-
-    def delete(self, uid) -> None:
-        raise NotImplementedError
 
     @staticmethod
     def _clear_cache():

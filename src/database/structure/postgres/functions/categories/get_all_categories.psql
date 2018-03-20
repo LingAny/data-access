@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION get_all_categories()
+
+RETURNS TABLE(category_id UUID,
+              reflection_id UUID,
+              title TEXT)
+AS
+$BODY$
+  BEGIN
+    RETURN QUERY
+    SELECT ct.category_id, ct.reflection_id, ct.title
+    FROM categories ct;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;

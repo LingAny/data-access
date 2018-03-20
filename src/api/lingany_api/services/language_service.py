@@ -11,16 +11,12 @@ from lingany_api.persistance.repositories.language_repository import LanguageRep
 
 
 @singleton
-class LanguageService(Service):
+class LanguageService(Service[Language, LanguageDTO, LanguageRepository]):
 
     @inject
     def __init__(self, repo: LanguageRepository) -> None:
         super().__init__(repo)
         self._converter = LanguageConverter()
-
-    def get_by_id(self, uid: UUID, expand: AbstractExpandSet) -> Language:
-        language_dto = self._repo.get_by_id(uid)
-        return self._convert(language_dto, expand)
 
     def _convert(self, entity: LanguageDTO, expand: AbstractExpandSet) -> Optional[Language]:
         if not entity:
@@ -28,15 +24,6 @@ class LanguageService(Service):
 
         language = self._converter.convert(entity)
         return language
-
-    def get_all(self, expand: AbstractExpandSet):
-        raise NotImplementedError
-
-    def update(self, entity) -> None:
-        raise NotImplementedError
-
-    def delete(self, uid) -> None:
-        raise NotImplementedError
 
     @staticmethod
     def _clear_cache():

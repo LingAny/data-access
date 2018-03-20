@@ -1,8 +1,8 @@
 from injector import inject
-from typing import Any
+from typing import Any, List
 
 from lingany_api.persistance.dto.reflection_dto import ReflectionDTO
-from sqlutils import Repository, DataContext, create_one
+from sqlutils import Repository, DataContext, create_one, create_many
 
 
 class ReflectionRepository(Repository[ReflectionDTO]):
@@ -19,8 +19,9 @@ class ReflectionRepository(Repository[ReflectionDTO]):
         self._context.callproc('add_reflection', [entity.uid, entity.title, entity.native_language_id,
                                                   entity.foreign_language_id])
 
-    def get_all(self) -> None:
-        raise NotImplementedError
+    def get_all(self) -> List[ReflectionDTO]:
+        data = self._context.callproc('get_all_reflections', [])
+        return create_many(ReflectionDTO, data)
 
     def update(self, entity) -> None:
         raise NotImplementedError
