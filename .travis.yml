@@ -1,6 +1,3 @@
-sudo: required
-language: none
-
 addons:
   ssh_known_hosts: 185.143.172.57
 
