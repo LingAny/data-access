@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION get_reflection_by_id()
+
+RETURNS TABLE(reflection_id UUID,
+              title TEXT,
+              native_language_id UUID,
+              foreign_language_id UUID)
+AS
+$BODY$
+  BEGIN
+    RETURN QUERY
+    SELECT reflection_id, title, native_language_id, foreign_language_id
+    FROM reflection;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
