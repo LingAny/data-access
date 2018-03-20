@@ -16,20 +16,22 @@ class ReflectionTestCase(unittest.TestCase):
         cls._stub = ReflectionStub()
         cls._language_stub = LanguageStub()
 
-        cls._native_language_id = cls._language_stub.get_instance()['id']
-        cls._foreign_language_id = cls._language_stub.get_instance()['id']
-
     def test_create(self):
-        response, sut = self._stub.create(native_language_id=self._native_language_id,
-                                          foreign_language_id=self._foreign_language_id)
+        native_language_id = self._language_stub.get_instance()['id']
+        foreign_language_id = self._language_stub.get_instance()['id']
+        response, sut = self._stub.create(native_language_id=native_language_id,
+                                          foreign_language_id=foreign_language_id)
         self.assertEqual(201, response.status_code)
 
-    # def test_get_by_id(self):
-    #     response, sut = self._stub.create()
-    #     self.assertEqual(201, response.status_code)
-    #     response, obj = self._stub.get_by_id(sut['id'])
-    #     self.assertEqual(200, response.status_code)
-    #     self._check(obj, sut)
+    def test_get_by_id(self):
+        native_language_id = self._language_stub.get_instance()['id']
+        foreign_language_id = self._language_stub.get_instance()['id']
+        response, sut = self._stub.create(native_language_id=native_language_id,
+                                          foreign_language_id=foreign_language_id)
+        self.assertEqual(201, response.status_code)
+        response, obj = self._stub.get_by_id(sut['id'])
+        self.assertEqual(200, response.status_code)
+        self._check(obj, sut)
 
     def tearDown(self):
         self._stub.clear()
@@ -37,3 +39,5 @@ class ReflectionTestCase(unittest.TestCase):
     def _check(self, obj: Dict[str, Any], sut: Dict[str, Any]):
         self.assertEqual(sut['id'], obj['id'])
         self.assertIn('href', obj)
+        self.assertEqual(sut['nativeLanguageId'], obj['nativeLanguage']['id'])
+        self.assertEqual(sut['foreignLanguageId'], obj['foreignLanguage']['id'])

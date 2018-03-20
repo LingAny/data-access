@@ -1,7 +1,7 @@
 from flask import Flask
 from injector import inject, singleton
 
-from lingany_api.blueprints.category_clueprint import CategoryBlueprint
+from lingany_api.blueprints.category_blueprint import CategoryBlueprint
 from lingany_api.blueprints.language_blueprint import LanguageBlueprint
 from lingany_api.blueprints.reflection_blueprint import ReflectionBlueprint
 from lingany_api.blueprints.training_blueprint import TrainingBlueprint
