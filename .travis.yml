@@ -15,4 +15,4 @@ deploy:
   skip_cleanup: true
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ root@185.143.172.57:/root/travis-files/lingany-data-access
   on:
-    branch: create-travis
+    branch: developer
