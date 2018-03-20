@@ -74,8 +74,9 @@ def translate_values(values: Set[str], languages: List[Language]) -> Dict[str, S
             logging.info(f"translating values {values} to {lang.title} ...")
             translated_values = set()
             for value in values:
-                logging.info(f"try translate {value} to {lang.title}")
-                word = translator.translate_word(value, 'ru', lang.code)
+                logging.info(f"try translate {value} to {lang.title} ...")
+                word = translator.translate_text(value, 'ru', lang.code)
+                logging.info(f"{value} on {lang.title} is {word}")
                 translated_values.add(word)
 
             data.update({
