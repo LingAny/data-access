@@ -1,37 +1,45 @@
 import json
-import urllib.request
-import urllib.parse
+from functools import lru_cache
+from typing import Optional
+
+import requests
 
 
 from manager.conf.yandex_translator_conf import YandexTranslatorConf
 
 
 class Translator(object):
+
     def __init__(self, conf: YandexTranslatorConf) -> None:
         self._conf = conf
 
-    def translate_word(self, text: str, native_language: str, foreign_language: str) -> str:
-        key = '?key=' + self._conf.key
-        text = '&text=' + text
-        lang = '&lang=' + native_language + '-' + foreign_language
-        format = '&format=plain'
-        url = self._conf.url + key + text + lang + format
-        response = urllib.request.urlopen(url)
-        answer = response.read().decode('utf-8').replace("'", '"')
-        data = json.loads(answer)
-        return data.get('text')[0]
+    @lru_cache(maxsize=None)
+    def translate_word(self, text: str, native_lang_code: str, foreign_lang_code: str) -> Optional[str]:
 
-    def translate_text(self, text, native_language: str, foreign_language: str) -> str:
-        key = '?key=' + self._conf.key
-        lang = '&lang=' + native_language + '-' + foreign_language
-        value = {
+        params = {
+            'key': self._conf.key,
+            'lang': self._build_lang(native_lang_code, foreign_lang_code),
             'text': text
         }
-        url = self._conf.url + key + lang
 
-        data = urllib.parse.urlencode(value).encode("utf-8")
-        req = urllib.request.Request(url)
-        with urllib.request.urlopen(req, data=data) as f:
-            resp = f.read().decode('utf-8').replace("'", '"')
-            data = json.loads(resp)
-            return data.get('text')[0]
+        response = requests.get(self._conf.url, params=params)
+        data = json.loads(response.text)
+        return None if len(data) == 0 else data.get('text')[0]
+
+    def translate_text(self, text: str, native_lang_code: str, foreign_lang_code: str) -> Optional[str]:
+        params = {
+            'key': self._conf.key,
+            'lang': self._build_lang(native_lang_code, foreign_lang_code),
+            'text': text
+        }
+        data = {
+            'text': text
+        }
+
+        response = requests.post(self._conf.url, params=params, data=data)
+        data = json.loads(response.text)
+        return None if len(data) == 0 else data.get('text')[0]
+
+    @classmethod
+    def _build_lang(cls, native_lang_code: str, foreign_lang_code: str) -> str:
+        return f"{native_lang_code}-{foreign_lang_code}"

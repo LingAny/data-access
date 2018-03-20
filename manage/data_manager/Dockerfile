@@ -18,5 +18,6 @@ ENV LIST_PATH ''
 
 RUN mkdir -p /tmp/structure/output/dict/reflections
 RUN mkdir -p /tmp/structure/output/dict/categories
+RUN mkdir -p /tmp/structure/output/dict/training
 
 CMD python3.6 main.py
