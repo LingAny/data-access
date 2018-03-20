@@ -20,6 +20,6 @@ class CategoryService(object):
                 continue
             title = data[0]
             values = set(data[1:])
-            categories.append(ExternalCategory(title=title, values=values))
+            categories.append(ExternalCategory(title=title, items=values))
 
         return categories
