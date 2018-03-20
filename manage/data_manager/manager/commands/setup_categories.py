@@ -1,6 +1,6 @@
 import csv
 import logging
-from typing import List, Dict
+from typing import List, Dict, Set
 from uuid import uuid4
 
 from manager.conf.configure import Configure
@@ -31,7 +31,8 @@ def convert_external_categories(external: List[ExternalCategory], languages: Lis
 
     for ext in external:
 
-        titles = translate_title(ext.title, languages)
+        titles = translate_title(title=ext.title, languages=languages)
+        values = translate_values(values=ext.values, languages=languages)
 
         for ref in reflections:
             title = titles.get(ref.native_lang.code)
@@ -58,6 +59,29 @@ def translate_title(title: str, languages: List[Language]) -> Dict[str, str]:
                 lang.code: translated_title
             })
     return titles
+
+
+def translate_values(values: Set[str], languages: List[Language]) -> Dict[str, Set[str]]:
+    data: Dict[str, Set[str]] = dict()
+
+    for lang in languages:
+        if lang.code == 'ru':
+            data.update({
+                lang.code: values
+            })
+
+        else:
+            logging.info(f"translating values {values} to {lang.title} ...")
+            translated_values = []
+            for value in values:
+                logging.info(f"try translate {value} to {lang.title}")
+                word = translator.translate_word(value, 'ru', lang.code)
+                translated_values.append(word)
+
+            data.update({
+                lang.code: translated_values
+            })
+    return data
 
 
 def save_categories(conf: Configure, categories: List[Category]):
