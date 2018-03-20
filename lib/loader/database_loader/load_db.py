@@ -31,6 +31,7 @@ def main():
     load_languages()
     load_reflections()
     load_categories()
+    load_training()
 
     logging.info('completed')
 
@@ -80,12 +81,23 @@ def load_categories():
     logging.info("completed load categories")
 
 
-def load_data(data: List[List[Any]]):
-    logging.info("load data..")
+def load_training():
+    logging.info('load categories')
+    files = get_files(path + "/structure/dict/training")
+    for filename in files:
+        msg = 'load training from ' + filename
+        logging.info(msg)
+        data = CSVReader.read(filename)
+        for i in range(1, len(data)):
+            row = data[i]
+            logging.info('load training ' + row[2] + ':' + row[3])
+            context.callproc('add_training', [UUID(row[0]), UUID(row[1]), row[2], row[3]])
+
+    logging.info("completed load training")
 
 
-def get_files(path):
-    return [join(path, f) for f in os.listdir(path) if isfile(join(path, f))]
+def get_files(p_path):
+    return [join(p_path, f) for f in os.listdir(p_path) if isfile(join(p_path, f))]
 
 
 if __name__ == '__main__':
