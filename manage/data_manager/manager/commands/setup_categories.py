@@ -18,11 +18,12 @@ yandex_translator_conf = EnvYandexTranslatorConfFactory.create()
 translator = Translator(yandex_translator_conf)
 
 
-def setup(conf: Configure, languages: List[Language], reflections: List[Reflection]) -> None:
+def setup(conf: Configure, languages: List[Language], reflections: List[Reflection]) -> List[Category]:
     logging.info(f"setup categories...")
     ext_categories = CategoryService.get_supported_categories(conf.list_path + 'categories/')
     categories = convert_external_categories(ext_categories, languages, reflections)
     save_categories(conf=conf, categories=categories)
+    return categories
 
 
 def convert_external_categories(external: List[ExternalCategory], languages: List[Language],
