@@ -1,6 +1,6 @@
 import logging
 
-from manager.commands import setup_reflections, setup_categories
+from manager.commands import setup_reflections, setup_categories, setup_training
 from manager.conf.env_congigure_facotry import EnvConfigureFactory
 from manager.services.language_service import LanguageService
 
@@ -15,7 +15,10 @@ def manage():
 
     reflections = setup_reflections.setup(conf=conf, languages=languages)
 
-    setup_categories.setup(conf=conf, languages=languages, reflections=reflections)
+    categories = setup_categories.setup(conf=conf, languages=languages, reflections=reflections)
+
+    setup_training.setup(conf=conf, categories=categories)
+
 
 if __name__ == '__main__':
     manage()

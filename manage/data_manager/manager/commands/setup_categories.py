@@ -34,11 +34,10 @@ def convert_external_categories(external: List[ExternalCategory], languages: Lis
 
         logging.info(f'[convert_external_categories] convert category: {ext.title}')
         titles = translate_title(title=ext.title, languages=languages)
-        items = translate_items(items=ext.items, languages=languages)
 
         for ref in reflections:
             title = titles.get(ref.native_lang.code)
-            category = Category(uid=uuid4(), title=title, reflection=ref, items=items.get(ref.foreign_lang.code))
+            category = Category(uid=uuid4(), title=title, reflection=ref, items=ext.items)
             categories.append(category)
 
     return categories
@@ -60,28 +59,6 @@ def translate_title(title: str, languages: List[Language]) -> Dict[str, str]:
                 lang.code: translated_title
             })
     return titles
-
-
-def translate_items(items: Set[str], languages: List[Language]) -> Dict[str, Set[str]]:
-    data: Dict[str, Set[str]] = dict()
-
-    for lang in languages:
-        if lang.code == 'ru':
-            data.update({
-                lang.code: items
-            })
-
-        else:
-            logging.info(f"translating category values to {lang.title}")
-            translated_items = set()
-            for item in items:
-                word = translator.translate_word(item, 'ru', lang.code)
-                translated_items.add(word)
-
-            data.update({
-                lang.code: translated_items
-            })
-    return data
 
 
 def save_categories(conf: Configure, categories: List[Category]):

@@ -1,4 +1,5 @@
 import json
+from functools import lru_cache
 from typing import Optional
 
 import requests
@@ -12,6 +13,7 @@ class Translator(object):
     def __init__(self, conf: YandexTranslatorConf) -> None:
         self._conf = conf
 
+    @lru_cache(maxsize=None)
     def translate_word(self, text: str, native_lang_code: str, foreign_lang_code: str) -> Optional[str]:
 
         params = {
