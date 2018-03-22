@@ -23,6 +23,10 @@ class TrainingRepository(Repository[TrainingDTO]):
         data = self._context.callproc('get_all_trainings', [])
         return create_many(TrainingDTO, data)
 
+    def get_trainings_for_category(self, category_id: str) -> List[TrainingDTO]:
+        data = self._context.callproc('get_trainings_for_category', [category_id])
+        return create_many(TrainingDTO, data)
+
     def update(self, entity) -> None:
         raise NotImplementedError
 
