@@ -37,6 +37,12 @@ class TrainingBlueprint(BaseBlueprint[TrainingService]):
             expand = ExpandSet.load(request.args.get('expand'))
             return self._get_all(expand)
 
+        @blueprint.route('/get-for-reflection/<uid>', methods=['GET'])
+        def _get_categories_for_reflection(uid: str):
+            expand = ExpandSet.load(request.args.get('expand'))
+            models = self._service.get_trainings_for_reflection(uid, expand=expand)
+            return self._return_many(models)
+
         @blueprint.route('/', methods=['POST'])
         def _add():
             return self._add()

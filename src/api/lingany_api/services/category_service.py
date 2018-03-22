@@ -17,6 +17,10 @@ class CategoryService(Service[Category, CategoryDTO, CategoryRepository]):
         super().__init__(repo)
         self._converter = CategoryConverter()
 
+    def get_categories_for_reflection(self, reflection_id: str, expand: AbstractExpandSet) -> List[Category]:
+        category_dto_list = self._repo.get_categories_for_reflection(reflection_id)
+        return self._convert_many(category_dto_list, expand)
+
     def _convert(self, entity: CategoryDTO, expand: AbstractExpandSet) -> Optional[Category]:
         if not entity:
             return None
