@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION get_categories_for_reflection(p_reflection_id UUID)
+
+RETURNS TABLE(category_id UUID,
+              reflection_id UUID,
+              title TEXT)
+AS
+$BODY$
+  BEGIN
+    RETURN QUERY
+    SELECT ct.category_id, ct.reflection_id, ct.title
+    FROM categories ct
+    WHERE ct.reflection_id=p_reflection_id;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
