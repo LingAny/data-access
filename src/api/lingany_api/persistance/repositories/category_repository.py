@@ -15,9 +15,6 @@ class CategoryRepository(Repository[CategoryDTO]):
         data = self._context.callproc('get_category_by_id', [uid])
         return create_one(CategoryDTO, data)
 
-    def add(self, entity: CategoryDTO) -> None:
-        self._context.callproc('add_category', [entity.uid, entity.reflection_id, entity.title])
-
     def get_all(self) -> List[CategoryDTO]:
         data = self._context.callproc('get_all_categories', [])
         return create_many(CategoryDTO, data)
@@ -25,6 +22,9 @@ class CategoryRepository(Repository[CategoryDTO]):
     def get_categories_for_reflection(self, reflection_id: str) -> List[CategoryDTO]:
         data = self._context.callproc('get_categories_for_reflection', [reflection_id])
         return create_many(CategoryDTO, data)
+
+    def add(self, entity: CategoryDTO) -> None:
+        raise NotImplementedError
 
     def update(self, entity) -> None:
         raise NotImplementedError

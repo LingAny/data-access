@@ -15,10 +15,6 @@ class ReflectionRepository(Repository[ReflectionDTO]):
         data = self._context.callproc('get_reflection_by_id', [uid])
         return create_one(ReflectionDTO, data)
 
-    def add(self, entity: ReflectionDTO) -> None:
-        self._context.callproc('add_reflection', [entity.uid, entity.title, entity.native_language_id,
-                                                  entity.foreign_language_id])
-
     def get_all(self) -> List[ReflectionDTO]:
         data = self._context.callproc('get_all_reflections', [])
         return create_many(ReflectionDTO, data)
@@ -27,6 +23,9 @@ class ReflectionRepository(Repository[ReflectionDTO]):
                                     foreign_language_id: str) -> ReflectionDTO:
         data = self._context.callproc('get_reflection_by_languages', [native_language_id, foreign_language_id])
         return create_one(ReflectionDTO, data)
+
+    def add(self, entity: ReflectionDTO) -> None:
+        raise NotImplementedError
 
     def update(self, entity) -> None:
         raise NotImplementedError

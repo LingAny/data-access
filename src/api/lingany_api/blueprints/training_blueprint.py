@@ -43,8 +43,4 @@ class TrainingBlueprint(BaseBlueprint[TrainingService]):
             models = self._service.get_trainings_for_category(uid, expand=expand)
             return self._return_many(models)
 
-        @blueprint.route('/', methods=['POST'])
-        def _add():
-            return self._add()
-
         return blueprint

@@ -37,8 +37,4 @@ class LanguageBlueprint(BaseBlueprint[LanguageService]):
             expand = ExpandSet.load(request.args.get('expand'))
             return self._get_all(expand)
 
-        @blueprint.route('/', methods=['POST'])
-        def _add():
-            return self._add()
-
         return blueprint

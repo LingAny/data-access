@@ -15,10 +15,6 @@ class TrainingRepository(Repository[TrainingDTO]):
         data = self._context.callproc('get_training_by_id', [uid])
         return create_one(TrainingDTO, data)
 
-    def add(self, entity: TrainingDTO) -> None:
-        self._context.callproc('add_training', [entity.uid, entity.category_id,
-                                                entity.native_word, entity.foreign_word])
-
     def get_all(self) -> List[TrainingDTO]:
         data = self._context.callproc('get_all_trainings', [])
         return create_many(TrainingDTO, data)
@@ -26,6 +22,9 @@ class TrainingRepository(Repository[TrainingDTO]):
     def get_trainings_for_category(self, category_id: str) -> List[TrainingDTO]:
         data = self._context.callproc('get_trainings_for_category', [category_id])
         return create_many(TrainingDTO, data)
+
+    def add(self, entity: TrainingDTO) -> None:
+        raise NotImplementedError
 
     def update(self, entity) -> None:
         raise NotImplementedError

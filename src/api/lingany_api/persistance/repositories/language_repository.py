@@ -15,12 +15,12 @@ class LanguageRepository(Repository[LanguageDTO]):
         data = self._context.callproc('get_language_by_id', [uid])
         return create_one(LanguageDTO, data)
 
-    def add(self, entity: LanguageDTO) -> None:
-        self._context.callproc('add_language', [entity.uid, entity.title])
-
     def get_all(self) -> List[LanguageDTO]:
         data = self._context.callproc('get_all_languages', [])
         return create_many(LanguageDTO, data)
+
+    def add(self, entity: LanguageDTO) -> None:
+        raise NotImplementedError
 
     def update(self, entity) -> None:
         raise NotImplementedError

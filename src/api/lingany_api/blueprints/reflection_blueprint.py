@@ -43,8 +43,4 @@ class ReflectionBlueprint(BaseBlueprint[ReflectionService]):
             model = self._service.get_reflection_by_languages(n_id, f_id, expand=expand)
             return self._return_one(model)
 
-        @blueprint.route('/', methods=['POST'])
-        def _add():
-            return self._add()
-
         return blueprint
