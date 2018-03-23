@@ -1,0 +1,10 @@
+CREATE TABLE reflection
+(
+    reflection_id UUID NOT NULL,
+    title TEXT NOT NULL,
+    native_language_id UUID NOT NULL,
+    foreign_language_id UUID NOT NULL,
+
+    PRIMARY KEY (reflection_id),
+    UNIQUE (native_language_id, foreign_language_id)
+);

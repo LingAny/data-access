@@ -1,0 +1,3 @@
+ALTER TABLE training
+    ADD CONSTRAINT training_fk_categories
+    FOREIGN KEY(category_id) REFERENCES categories(category_id);

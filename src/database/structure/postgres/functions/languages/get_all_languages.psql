@@ -1,0 +1,13 @@
+CREATE OR REPLACE FUNCTION get_all_languages()
+
+RETURNS TABLE(language_id UUID,
+              title TEXT)
+AS
+$BODY$
+  BEGIN
+    RETURN QUERY
+    SELECT l.language_id, l.title
+    FROM languages l;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;

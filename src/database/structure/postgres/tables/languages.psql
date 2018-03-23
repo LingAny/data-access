@@ -1,0 +1,7 @@
+CREATE TABLE languages
+(
+    language_id UUID NOT NULL,
+    title TEXT NOT NULL,
+
+    PRIMARY KEY (language_id)
+);

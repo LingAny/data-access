@@ -1,0 +1,3 @@
+ALTER TABLE categories
+    ADD CONSTRAINT categories_fk_reflection
+    FOREIGN KEY(reflection_id) REFERENCES reflection(reflection_id);

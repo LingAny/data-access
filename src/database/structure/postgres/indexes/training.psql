@@ -1,0 +1,6 @@
+CREATE INDEX training_category_idx
+  ON training (category_id);
+
+--CREATE INDEX training_all_idx
+--  ON training (training_id, category_id, native_word, foreign_word);
+CLUSTER training USING training_category_idx;

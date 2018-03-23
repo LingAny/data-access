@@ -1,0 +1,2 @@
+CREATE INDEX categories_refl_idx
+  ON categories (reflection_id);

@@ -1,0 +1,2 @@
+CREATE INDEX reflection_native_lang_foreign_lang_idx
+  ON reflection (native_language_id, foreign_language_id);

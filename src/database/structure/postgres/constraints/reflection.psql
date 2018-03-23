@@ -1,0 +1,7 @@
+ALTER TABLE reflection
+    ADD CONSTRAINT reflection_native_fk_languages
+    FOREIGN KEY(native_language_id) REFERENCES languages(language_id);
+
+ALTER TABLE reflection
+    ADD CONSTRAINT reflection_foreign_fk_languages
+    FOREIGN KEY(foreign_language_id) REFERENCES languages(language_id);
