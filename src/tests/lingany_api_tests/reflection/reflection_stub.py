@@ -1,6 +1,6 @@
 import os
 
-from typing import Any, Dict, Tuple, List
+from typing import Any, Dict, Tuple, List, Optional
 from uuid import uuid4, UUID
 
 from flask import Response
@@ -38,9 +38,9 @@ class ReflectionStub(ApiStub):
 
         return data
 
-    def get_instance(self) -> Dict[str, Any]:
-        _, obj = self.create()
-        return obj
+    def get_instance(self) -> Optional[Dict[str, Any]]:
+        _, list_obj = self.get_all()
+        return None if len(list_obj) == 0 else list_obj[0]
 
     def get_reflection_by_languages(self, native_language_id: UUID,
                                     foreign_language_id: UUID) -> Tuple[Response, Dict[str, Any]]:

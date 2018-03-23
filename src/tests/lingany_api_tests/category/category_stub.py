@@ -1,6 +1,6 @@
 import os
 
-from typing import Any, Dict, Tuple, List
+from typing import Any, Dict, Tuple, List, Optional
 from uuid import uuid4, UUID
 
 from flask import Response
@@ -33,9 +33,9 @@ class CategoryStub(ApiStub):
 
         return data
 
-    def get_instance(self) -> Dict[str, Any]:
-        _, obj = self.create()
-        return obj
+    def get_instance(self) -> Optional[Dict[str, Any]]:
+        _, list_obj = self.get_all()
+        return None if len(list_obj) == 0 else list_obj[0]
 
     def get_categories_for_reflection(self, reflection_id: UUID) -> Tuple[Response, List[Dict[str, Any]]]:
         response = Request.get(f'{self.root}/get-for-reflection/{reflection_id}')

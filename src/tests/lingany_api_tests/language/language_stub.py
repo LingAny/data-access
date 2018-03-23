@@ -1,6 +1,6 @@
 import os
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from uuid import uuid4
 
 from testutils.stubs.api_stub import ApiStub
@@ -18,6 +18,6 @@ class LanguageStub(ApiStub):
             'title': uuid4().hex if kwargs.get('title') is None else kwargs.get('title')
         }
 
-    def get_instance(self) -> Dict[str, Any]:
-        _, obj = self.create()
-        return obj
+    def get_instance(self) -> Optional[Dict[str, Any]]:
+        _, list_obj = self.get_all()
+        return None if len(list_obj) == 0 else list_obj[0]
