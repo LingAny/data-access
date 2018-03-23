@@ -35,6 +35,15 @@ class TrainingTestCase(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertGreater(len(list_obj), 0)
 
+    def test_get_trainings_for_categories(self):
+        category_id = self._category_stub.get_instance()['id']
+        response, sut = self._stub.create(category_id=category_id)
+        self.assertEqual(201, response.status_code)
+
+        response, obj = self._stub.get_trainings_for_categories(category_id)
+        self.assertEqual(200, response.status_code)
+        self._check(obj[0], sut)
+
     def tearDown(self):
         self._stub.clear()
 

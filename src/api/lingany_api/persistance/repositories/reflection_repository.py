@@ -25,7 +25,7 @@ class ReflectionRepository(Repository[ReflectionDTO]):
 
     def get_reflection_by_languages(self, native_language_id: str,
                                     foreign_language_id: str) -> ReflectionDTO:
-        data = self._context.callproc('get_all_reflections', [native_language_id, foreign_language_id])
+        data = self._context.callproc('get_reflection_by_languages', [native_language_id, foreign_language_id])
         return create_one(ReflectionDTO, data)
 
     def update(self, entity) -> None:

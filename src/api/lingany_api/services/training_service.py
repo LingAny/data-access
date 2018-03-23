@@ -17,8 +17,8 @@ class TrainingService(Service[Training, TrainingDTO, TrainingRepository]):
         super().__init__(repo)
         self._converter = TrainingConverter()
 
-    def get_trainings_for_reflection(self, reflection_id: str, expand: AbstractExpandSet) -> List[Training]:
-        training_dto_list = self._repo.get_trainings_for_reflection(reflection_id)
+    def get_trainings_for_category(self, category_id: str, expand: AbstractExpandSet) -> List[Training]:
+        training_dto_list = self._repo.get_trainings_for_category(category_id)
         return self._convert_many(training_dto_list, expand)
 
     def _convert(self, entity: TrainingDTO, expand: AbstractExpandSet) -> Optional[Training]:
