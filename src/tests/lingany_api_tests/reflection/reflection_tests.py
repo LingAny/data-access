@@ -1,6 +1,7 @@
 import unittest
 
 from typing import Dict, Any
+from uuid import UUID
 
 from src.tests.lingany_api_tests.language.language_stub import LanguageStub
 from src.tests.lingany_api_tests.reflection.reflection_stub import ReflectionStub
@@ -16,47 +17,44 @@ class ReflectionTestCase(unittest.TestCase):
         cls._stub = ReflectionStub()
         cls._language_stub = LanguageStub()
 
-    def test_create(self):
+    def test_fail_create(self):
         native_language_id = self._language_stub.get_instance()['id']
         foreign_language_id = self._language_stub.get_instance()['id']
         response, sut = self._stub.create(native_language_id=native_language_id,
                                           foreign_language_id=foreign_language_id)
-        self.assertEqual(201, response.status_code)
+        self.assertIn(response.status_code, [404, 405])
+
+    def test_fail_delete(self):
+        sut = self._stub.get_instance()
+        response = self._stub.delete(instance_id=sut['id'])
+        self.assertIn(response.status_code, [404, 405])
 
     def test_get_by_id(self):
-        native_language_id = self._language_stub.get_instance()['id']
-        foreign_language_id = self._language_stub.get_instance()['id']
-        response, sut = self._stub.create(native_language_id=native_language_id,
-                                          foreign_language_id=foreign_language_id)
-        self.assertEqual(201, response.status_code)
+        sut = self._stub.get_instance()
         response, obj = self._stub.get_by_id(sut['id'])
         self.assertEqual(200, response.status_code)
         self._check(obj, sut)
 
     def test_get_all(self):
-        response, sut = self._stub.create()
-        self.assertEqual(201, response.status_code)
         response, list_obj = self._stub.get_all()
         self.assertEqual(200, response.status_code)
         self.assertGreater(len(list_obj), 0)
 
     def test_get_reflection_by_languages(self):
-        native_language_id = self._language_stub.get_instance()['id']
-        foreign_language_id = self._language_stub.get_instance()['id']
+        native_lang, foreign_lang = self._language_stub.get_pair()
 
-        response, sut = self._stub.create(native_language_id=native_language_id,
-                                          foreign_language_id=foreign_language_id)
-        self.assertEqual(201, response.status_code)
-
-        response, obj = self._stub.get_reflection_by_languages(native_language_id, foreign_language_id)
+        response, obj = self._stub.get_reflection_by_languages(native_lang_id=native_lang['id'],
+                                                               foreign_lang_id=foreign_lang['id'])
         self.assertEqual(200, response.status_code)
-        self._check(obj, sut)
-
-    def tearDown(self):
-        self._stub.clear()
+        self.assertIsNotNone(obj['id'])
+        self.assertIsNotNone(obj['href'])
+        self.assertIsNotNone(obj['title'])
+        self.assertEqual(UUID(native_lang['id']), UUID(obj['nativeLanguage']['id']))
+        self.assertEqual(UUID(foreign_lang['id']), UUID(obj['foreignLanguage']['id']))
 
     def _check(self, obj: Dict[str, Any], sut: Dict[str, Any]):
         self.assertEqual(sut['id'], obj['id'])
-        self.assertIn('href', obj)
-        self.assertEqual(sut['nativeLanguageId'], obj['nativeLanguage']['id'])
-        self.assertEqual(sut['foreignLanguageId'], obj['foreignLanguage']['id'])
+        self.assertEqual(sut['href'], obj['href'])
+        self.assertEqual(sut['title'], obj['title'])
+        self.assertEqual(sut['nativeLanguage']['id'], obj['nativeLanguage']['id'])
+        self.assertEqual(sut['foreignLanguage']['id'], obj['foreignLanguage']['id'])

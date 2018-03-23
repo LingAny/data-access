@@ -1,6 +1,6 @@
 import os
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 from uuid import uuid4
 
 from testutils.stubs.api_stub import ApiStub
@@ -21,3 +21,7 @@ class LanguageStub(ApiStub):
     def get_instance(self) -> Optional[Dict[str, Any]]:
         _, list_obj = self.get_all()
         return None if len(list_obj) == 0 else list_obj[0]
+
+    def get_pair(self) -> Optional[Tuple[Dict[str, Any], Dict[str, Any]]]:
+        _, list_obj = self.get_all()
+        return None if len(list_obj) == 0 else list_obj[0], list_obj[1]

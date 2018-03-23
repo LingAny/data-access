@@ -42,9 +42,9 @@ class ReflectionStub(ApiStub):
         _, list_obj = self.get_all()
         return None if len(list_obj) == 0 else list_obj[0]
 
-    def get_reflection_by_languages(self, native_language_id: UUID,
-                                    foreign_language_id: UUID) -> Tuple[Response, Dict[str, Any]]:
-        response = Request.get(f'{self.root}/get-by-languages/{native_language_id}/{foreign_language_id}')
+    def get_reflection_by_languages(self, native_lang_id: UUID,
+                                    foreign_lang_id: UUID) -> Tuple[Response, Dict[str, Any]]:
+        response = Request.get(f'{self.root}/get-by-languages/{native_lang_id}/{foreign_lang_id}')
         result = None
         if response.status_code == 200:
             result = response.json()
