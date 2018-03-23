@@ -1,8 +1,11 @@
 import os
 
-from typing import Any, Dict
-from uuid import uuid4
+from typing import Any, Dict, Tuple, List
+from uuid import uuid4, UUID
 
+from flask import Response
+
+from apiutils import Request
 from src.tests.lingany_api_tests.language.language_stub import LanguageStub
 from testutils.stubs.api_stub import ApiStub
 
@@ -38,3 +41,12 @@ class ReflectionStub(ApiStub):
     def get_instance(self) -> Dict[str, Any]:
         _, obj = self.create()
         return obj
+
+    def get_reflection_by_languages(self, native_language_id: UUID,
+                                    foreign_language_id: UUID) -> Tuple[Response, Dict[str, Any]]:
+        response = Request.get(f'{self.root}/get-by-languages/{native_language_id}/{foreign_language_id}')
+        result = None
+        if response.status_code == 200:
+            result = response.json()
+        return response, result
+

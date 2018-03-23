@@ -35,6 +35,15 @@ class CategoryTestCase(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertGreater(len(list_obj), 0)
 
+    def test_get_categories_for_reflection(self):
+        reflection_id = self._reflection_stub.get_instance()['id']
+        response, sut = self._stub.create(reflection_id=reflection_id)
+        self.assertEqual(201, response.status_code)
+
+        response, obj = self._stub.get_categories_for_reflection(reflection_id)
+        self.assertEqual(200, response.status_code)
+        self._check(obj[0], sut)
+
     def tearDown(self):
         self._stub.clear()
 

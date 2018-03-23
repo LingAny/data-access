@@ -1,8 +1,11 @@
 import os
 
-from typing import Any, Dict
-from uuid import uuid4
+from typing import Any, Dict, Tuple, List
+from uuid import uuid4, UUID
 
+from flask import Response
+
+from apiutils import Request
 from src.tests.lingany_api_tests.category.category_stub import CategoryStub
 from testutils.stubs.api_stub import ApiStub
 
@@ -34,3 +37,11 @@ class TrainingStub(ApiStub):
     def get_instance(self) -> Dict[str, Any]:
         _, obj = self.create()
         return obj
+
+    def get_trainings_for_categories(self, category_id: UUID) -> Tuple[Response, List[Dict[str, Any]]]:
+        response = Request.get(f'{self.root}/get-for-category/{category_id}')
+        result = None
+        if response.status_code == 200:
+            result = response.json()
+        return response, result
+

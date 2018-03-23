@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION get_trainings_for_category(p_category_id UUID)
+
+RETURNS TABLE(training_id UUID,
+              category_id UUID,
+              native_word TEXT,
+              foreign_word TEXT)
+AS
+$BODY$
+  BEGIN
+    RETURN QUERY
+    SELECT t.training_id, t.category_id, t.native_word, t.foreign_word
+    FROM training t
+    WHERE t.category_id=p_category_id;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;

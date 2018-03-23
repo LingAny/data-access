@@ -40,6 +40,18 @@ class ReflectionTestCase(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertGreater(len(list_obj), 0)
 
+    def test_get_reflection_by_languages(self):
+        native_language_id = self._language_stub.get_instance()['id']
+        foreign_language_id = self._language_stub.get_instance()['id']
+
+        response, sut = self._stub.create(native_language_id=native_language_id,
+                                          foreign_language_id=foreign_language_id)
+        self.assertEqual(201, response.status_code)
+
+        response, obj = self._stub.get_reflection_by_languages(native_language_id, foreign_language_id)
+        self.assertEqual(200, response.status_code)
+        self._check(obj, sut)
+
     def tearDown(self):
         self._stub.clear()
 

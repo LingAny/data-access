@@ -37,6 +37,12 @@ class ReflectionBlueprint(BaseBlueprint[ReflectionService]):
             expand = ExpandSet.load(request.args.get('expand'))
             return self._get_all(expand)
 
+        @blueprint.route('/get-by-languages/<n_id>/<f_id>', methods=['GET'])
+        def _get_reflection_by_languages(n_id: str, f_id: str):
+            expand = ExpandSet.load(request.args.get('expand'))
+            model = self._service.get_reflection_by_languages(n_id, f_id, expand=expand)
+            return self._return_one(model)
+
         @blueprint.route('/', methods=['POST'])
         def _add():
             return self._add()

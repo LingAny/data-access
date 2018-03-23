@@ -1,5 +1,5 @@
 from injector import singleton, inject
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 
 from lingany_api.converters.reflection_converter import ReflectionConverter
@@ -16,6 +16,12 @@ class ReflectionService(Service[Reflection, ReflectionDTO, ReflectionRepository]
     def __init__(self, repo: ReflectionRepository) -> None:
         super().__init__(repo)
         self._converter = ReflectionConverter()
+
+    def get_reflection_by_languages(self, native_language_id: str,
+                                    foreign_language_id: str,
+                                    expand: AbstractExpandSet) -> Reflection:
+        reflection_dto = self._repo.get_reflection_by_languages(native_language_id, foreign_language_id)
+        return self._convert(reflection_dto, expand)
 
     def _convert(self, entity: ReflectionDTO, expand: AbstractExpandSet) -> Optional[Reflection]:
         if not entity:
