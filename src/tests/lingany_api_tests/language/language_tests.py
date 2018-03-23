@@ -13,27 +13,27 @@ class LanguageTestCase(unittest.TestCase):
     def setUpClass(cls):
         cls._stub = LanguageStub()
 
-    def test_create(self):
+    def test_fail_create(self):
         response, sut = self._stub.create()
-        self.assertEqual(201, response.status_code)
+        self.assertIn(response.status_code, [404, 405])
+
+    def test_fail_delete(self):
+        sut = self._stub.get_instance()
+        response = self._stub.delete(instance_id=sut['id'])
+        self.assertIn(response.status_code, [404, 405])
 
     def test_get_by_id(self):
-        response, sut = self._stub.create()
-        self.assertEqual(201, response.status_code)
+        sut = self._stub.get_instance()
         response, obj = self._stub.get_by_id(sut['id'])
         self.assertEqual(200, response.status_code)
         self._check(obj, sut)
 
     def test_get_all(self):
-        response, sut = self._stub.create()
-        self.assertEqual(201, response.status_code)
         response, list_obj = self._stub.get_all()
         self.assertEqual(200, response.status_code)
         self.assertGreater(len(list_obj), 0)
 
-    def tearDown(self):
-        self._stub.clear()
-
     def _check(self, obj: Dict[str, Any], sut: Dict[str, Any]):
-        self.assertEqual(sut['id'], obj['id'])
-        self.assertIn('href', obj)
+        self.assertEqual(obj['id'], sut['id'])
+        self.assertEqual(obj['href'], sut['href'])
+        self.assertEqual(obj['title'], sut['title'])
