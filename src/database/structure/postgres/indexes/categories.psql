@@ -1,2 +1,2 @@
-CREATE INDEX categories_refl_slug_idx
+CREATE INDEX categories_refl_idx
   ON categories (reflection_id);
