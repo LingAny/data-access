@@ -37,7 +37,7 @@ class CategoryBlueprint(BaseBlueprint[CategoryService]):
             expand = ExpandSet.load(request.args.get('expand'))
             return self._get_all(expand)
 
-        @blueprint.route('/get-for-reflection/<uid>', methods=['GET'])
+        @blueprint.route('/reflection/<uid>', methods=['GET'])
         def _get_categories_for_reflection(uid: str):
             expand = ExpandSet.load(request.args.get('expand'))
             models = self._service.get_categories_for_reflection(uid, expand=expand)
