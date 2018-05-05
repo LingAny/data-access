@@ -2,6 +2,7 @@ import unittest
 
 from typing import Dict, Any
 
+from lingany_api_tests.reflection.reflection_stub import ReflectionStub
 from src.tests.lingany_api_tests.category.category_stub import CategoryStub
 from src.tests.lingany_api_tests.training.training_stub import TrainingStub
 
@@ -10,11 +11,13 @@ class TrainingTestCase(unittest.TestCase):
 
     _stub: TrainingStub = None
     _category_stub: CategoryStub = None
+    _reflection_stub: ReflectionStub = None
 
     @classmethod
     def setUpClass(cls):
         cls._stub = TrainingStub()
         cls._category_stub = CategoryStub()
+        cls._reflection_stub = ReflectionStub()
 
     def test_fail_create(self):
         category_id = self._category_stub.get_instance()['id']
@@ -34,6 +37,12 @@ class TrainingTestCase(unittest.TestCase):
 
     def test_get_all(self):
         response, list_obj = self._stub.get_all()
+        self.assertEqual(200, response.status_code)
+        self.assertGreater(len(list_obj), 0)
+
+    def test_get_shape_for_reflection(self):
+        reflection = self._reflection_stub.get_instance()
+        response, list_obj = self._stub.get_shape_for_reflection(reflection_id=reflection['id'])
         self.assertEqual(200, response.status_code)
         self.assertGreater(len(list_obj), 0)
 

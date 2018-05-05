@@ -13,7 +13,7 @@ $BODY$
     SELECT t.training_id, t.category_id, t.native_word, t.foreign_word
     FROM reflection AS r
     JOIN categories AS c ON r.reflection_id = c.reflection_id
-    JOIN trainings AS t ON c.category_id = t.category_id
+    JOIN training AS t ON c.category_id = t.category_id
     WHERE r.reflection_id = p_reflection_id;
 
   END;
