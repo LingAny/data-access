@@ -43,7 +43,7 @@ class TrainingBlueprint(BaseBlueprint[TrainingService]):
             models = self._service.get_trainings_for_category(uid, expand=expand)
             return self._return_many(models)
 
-        @blueprint.route('/shape/<uid>', methods=['GET'])
+        @blueprint.route('/mix/<uid>', methods=['GET'])
         def _get_shape_for_reflection(uid: str):
             models = self._service.get_shape_for_reflection(uid)
             return self._return_many(models)
