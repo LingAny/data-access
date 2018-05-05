@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from injector import inject
 from typing import Any, List
 
@@ -14,6 +16,10 @@ class TrainingRepository(Repository[TrainingDTO]):
     def get_by_id(self, uid: str) -> TrainingDTO:
         data = self._context.callproc('get_training_by_id', [uid])
         return create_one(TrainingDTO, data)
+
+    def get_all_for_reflection(self, reflection_id: UUID) -> List[TrainingDTO]:
+        data  = self._context.callproc('get_all_trainings_for_reflection', [reflection_id])
+        return create_many(TrainingDTO, data)
 
     def get_all(self) -> List[TrainingDTO]:
         data = self._context.callproc('get_all_trainings', [])
