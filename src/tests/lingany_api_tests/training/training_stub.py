@@ -39,7 +39,7 @@ class TrainingStub(ApiStub):
         return None if len(list_obj) == 0 else list_obj[0]
 
     def get_trainings_for_categories(self, category_id: UUID) -> Tuple[Response, List[Dict[str, Any]]]:
-        response = Request.get(f'{self.root}/get-for-category/{category_id}')
+        response = Request.get(f'{self.root}/category/{category_id}')
         result = None
         if response.status_code == 200:
             result = response.json()
