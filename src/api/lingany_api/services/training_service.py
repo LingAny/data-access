@@ -1,3 +1,5 @@
+import random
+
 from injector import singleton, inject
 from typing import Optional, List
 from uuid import UUID
@@ -20,6 +22,12 @@ class TrainingService(Service[Training, TrainingDTO, TrainingRepository]):
     def get_trainings_for_category(self, category_id: str, expand: AbstractExpandSet) -> List[Training]:
         training_dto_list = self._repo.get_trainings_for_category(category_id)
         return self._convert_many(training_dto_list, expand)
+
+    def get_shape_reflection(self, reflection_id: str) -> List[Training]:
+        trainings = self._repo.get_all_for_reflection(reflection_id)
+        random.shuffle(trainings)
+        trainings = trainings[:20]
+        return self._convert_many(trainings)
 
     def _convert(self, entity: TrainingDTO, expand: AbstractExpandSet) -> Optional[Training]:
         if not entity:
