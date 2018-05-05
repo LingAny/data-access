@@ -23,7 +23,7 @@ class TrainingService(Service[Training, TrainingDTO, TrainingRepository]):
         training_dto_list = self._repo.get_trainings_for_category(category_id)
         return self._convert_many(training_dto_list, expand)
 
-    def get_shape_reflection(self, reflection_id: str) -> List[Training]:
+    def get_shape_for_reflection(self, reflection_id: str) -> List[Training]:
         trainings = self._repo.get_all_for_reflection(reflection_id)
         random.shuffle(trainings)
         trainings = trainings[:20]
