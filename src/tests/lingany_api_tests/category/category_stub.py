@@ -38,7 +38,7 @@ class CategoryStub(ApiStub):
         return None if len(list_obj) == 0 else list_obj[0]
 
     def get_categories_for_reflection(self, reflection_id: UUID) -> Tuple[Response, List[Dict[str, Any]]]:
-        response = Request.get(f'{self.root}/get-for-reflection/{reflection_id}')
+        response = Request.get(f'{self.root}/reflection/{reflection_id}')
         result = None
         if response.status_code == 200:
             result = response.json()

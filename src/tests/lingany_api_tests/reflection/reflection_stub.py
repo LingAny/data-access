@@ -44,7 +44,7 @@ class ReflectionStub(ApiStub):
 
     def get_reflection_by_languages(self, native_lang_id: UUID,
                                     foreign_lang_id: UUID) -> Tuple[Response, Dict[str, Any]]:
-        response = Request.get(f'{self.root}/get-by-languages/{native_lang_id}/{foreign_lang_id}')
+        response = Request.get(f'{self.root}/languages/{native_lang_id}/{foreign_lang_id}')
         result = None
         if response.status_code == 200:
             result = response.json()
