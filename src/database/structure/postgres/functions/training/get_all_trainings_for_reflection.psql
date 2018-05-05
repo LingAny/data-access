@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION get_all_trainings_for_reflection(p_reflection_id UUID)
+
+RETURNS TABLE(training_id UUID,
+              category_id UUID,
+              native_word TEXT,
+              foreign_word TEXT)
+AS
+$BODY$
+  BEGIN
+
+    RETURN QUERY
+
+    SELECT t.training_id, t.category_id, t.native_word, t.foreign_word
+    FROM reflection AS r
+    JOIN categories AS c ON r.reflection_id = c.reflection_id
+    JOIN trainings AS t ON c.category_id = t.category_id
+    WHERE r.reflection_id = p_reflection_id;
+
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
