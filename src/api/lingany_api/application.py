@@ -5,6 +5,7 @@ from lingany_api.blueprints.category_blueprint import CategoryBlueprint
 from lingany_api.blueprints.language_blueprint import LanguageBlueprint
 from lingany_api.blueprints.reflection_blueprint import ReflectionBlueprint
 from lingany_api.blueprints.training_blueprint import TrainingBlueprint
+from lingany_api.blueprints.word_blueprint import WordBlueprint
 from lingany_api.ioc import ioc
 
 
@@ -16,9 +17,11 @@ class Application(object):
         self._reflection = ioc.get(ReflectionBlueprint, scope=singleton).blueprint
         self._categories = ioc.get(CategoryBlueprint, scope=singleton).blueprint
         self._training = ioc.get(TrainingBlueprint, scope=singleton).blueprint
+        self._word = ioc.get(WordBlueprint, scope=singleton).blueprint
 
     def register(self, app: Flask) -> None:
         app.register_blueprint(self._languages, url_prefix='/languages')
         app.register_blueprint(self._reflection, url_prefix='/reflections')
         app.register_blueprint(self._categories, url_prefix='/categories')
         app.register_blueprint(self._training, url_prefix='/training')
+        app.register_blueprint(self._word, url_prefix='/word')
