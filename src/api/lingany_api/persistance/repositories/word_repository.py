@@ -11,8 +11,8 @@ class WordRepository(Repository[WordDTO]):
     def __init__(self, context: DataContext) -> None:
         self._context = context
 
-    def get_translation_by_text(self, translation: str) -> WordDTO:
-        data = self._context.callproc('get_translation_by_text', [translation])
+    def get_translation_by_text(self, text: str) -> WordDTO:
+        data = self._context.callproc('get_translation_by_text', [text])
         if data is None:
             # need to get data from the web
             pass
