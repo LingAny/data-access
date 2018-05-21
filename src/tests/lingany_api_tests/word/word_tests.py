@@ -15,3 +15,8 @@ class WordTestCase(unittest.TestCase):
         text = ""
         response, obj = self._stub.get_translation_by_text(text)
         self.assertEqual(200, response.status_code)
+
+    def get_text_by_translation(self):
+        translation = ""
+        response, obj = self._stub.get_text_by_translation(translation)
+        self.assertEqual(200, response.status_code)
