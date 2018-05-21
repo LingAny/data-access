@@ -16,10 +16,7 @@ class WordSerializer(Serializer):
         if not model:
             return None
 
-        data = {
-            'href': url_for('words._get_by_id', uid=model.uid),
-            'id': model.uid,
-        }
+        data = {}
 
         if model.is_loaded:
             data.update({

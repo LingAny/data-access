@@ -19,16 +19,20 @@ class WordRepository(Repository[WordDTO]):
             # need to get data from the web
             pass
 
-        word_dto = WordDTO(text=data.foreign_word, translation=data.native_word)
-        return word_dto
+        return self.create_word_dto_from_training(data)
 
     def get_text_by_translation(self, translation: str, ref_id: str) -> WordDTO:
         data = self._context.callproc('get_training_by_translation_and_reflection', [str(translation), str(ref_id)])
         if data is None:
             pass
 
-        word_dto = WordDTO(text=data.foreign_word, translation=data.native_word)
-        return word_dto
+        return self.create_word_dto_from_training(data)
+
+    def create_word_dto_from_training(self, data) -> WordDTO:
+        training_data = data[0]
+        text = training_data.get("native_word")
+        translation = training_data.get("foreign_word")
+        return WordDTO(text=text, translation=translation)
 
     def get_by_id(self, uid: Any) -> WordDTO:
         raise NotImplementedError

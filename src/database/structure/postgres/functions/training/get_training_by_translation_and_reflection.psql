@@ -10,12 +10,14 @@ RETURNS TABLE(training_id UUID,
 AS
 $BODY$
   BEGIN
+    RETURN QUERY
     SELECT t.training_id, t.category_id, t.native_word, t.foreign_word
     FROM reflection AS r
     JOIN categories AS c ON r.reflection_id = c.reflection_id
     JOIN training AS t ON c.category_id = t.category_id
     WHERE r.reflection_id = p_reflection_id and
-    t.native_word = p_text;
+    t.foreign_word = p_translation
+    LIMIT 1;
   END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
