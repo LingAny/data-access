@@ -1,8 +1,10 @@
+from uuid import UUID
+
 from injector import inject
 from typing import Any, List
 
 from lingany_api.persistance.dto.word_dto import WordDTO
-from sqlutils import Repository, DataContext, create_one, create_many
+from sqlutils import Repository, DataContext
 
 
 class WordRepository(Repository[WordDTO]):
@@ -11,8 +13,8 @@ class WordRepository(Repository[WordDTO]):
     def __init__(self, context: DataContext) -> None:
         self._context = context
 
-    def get_translation_by_text(self, text: str) -> WordDTO:
-        data = self._context.callproc('get_training_by_text_and_reflection', [text])
+    def get_translation_by_text(self, text: str, ref_id: str) -> WordDTO:
+        data = self._context.callproc('get_training_by_text_and_reflection', [str(text), str(ref_id)])
         if data is None:
             # need to get data from the web
             pass
@@ -20,8 +22,8 @@ class WordRepository(Repository[WordDTO]):
         word_dto = WordDTO(text=data.foreign_word, translation=data.native_word)
         return word_dto
 
-    def get_text_by_translation(self, translation: str) -> WordDTO:
-        data = self._context.callproc('get_training_by_translation_and_reflection', [translation])
+    def get_text_by_translation(self, translation: str, ref_id: str) -> WordDTO:
+        data = self._context.callproc('get_training_by_translation_and_reflection', [str(translation), str(ref_id)])
         if data is None:
             pass
 

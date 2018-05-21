@@ -2,8 +2,8 @@ import unittest
 
 from typing import Dict, Any
 
-from lingany_api_tests.reflection.reflection_stub import ReflectionStub
 from src.tests.lingany_api_tests.category.category_stub import CategoryStub
+from src.tests.lingany_api_tests.reflection.reflection_stub import ReflectionStub
 from src.tests.lingany_api_tests.training.training_stub import TrainingStub
 
 

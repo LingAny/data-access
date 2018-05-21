@@ -12,11 +12,13 @@ class WordTestCase(unittest.TestCase):
         cls._stub = WordStub()
 
     def test_get_translation_by_text(self):
-        text = ""
-        response, obj = self._stub.get_translation_by_text(text)
+        ref_id = "01838288daec45fb831c89a25502ec6a" #ru->en
+        text = "there"
+        response, obj = self._stub.get_translation_by_text(text, ref_id)
         self.assertEqual(200, response.status_code)
 
-    def get_text_by_translation(self):
-        translation = ""
-        response, obj = self._stub.get_text_by_translation(translation)
+    def test_get_text_by_translation(self):
+        ref_id = "01838288daec45fb831c89a25502ec6a" #ru->en
+        translation = "туда"
+        response, obj = self._stub.get_text_by_translation(translation, ref_id)
         self.assertEqual(200, response.status_code)
