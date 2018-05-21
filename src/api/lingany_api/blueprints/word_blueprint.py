@@ -1,0 +1,40 @@
+from uuid import UUID
+
+from flask import Blueprint, request
+from injector import singleton, inject
+
+from apiutils import BaseBlueprint
+from lingany_api.serializers.language_serializer import WordSerializer
+from lingany_api.services.language_service import WordService
+from sqlutils import ExpandSet
+
+
+@singleton
+class WordBlueprint(BaseBlueprint[WordService]):
+
+    @inject
+    def __init__(self, service: WordService) -> None:
+        super().__init__(service)
+
+    @property
+    def _name(self) -> str:
+        return 'languages'
+
+    @property
+    def _serializer(self) -> WordSerializer:
+        return WordSerializer()
+
+    def _create_blueprint(self) -> Blueprint:
+        blueprint = Blueprint(self._name, __name__)
+
+        @blueprint.route('/<uid>', methods=['GET'])
+        def _get_by_id(uid: str):
+            expand = ExpandSet.load(request.args.get('expand'))
+            return self._get_by_id(UUID(uid), expand)
+
+        @blueprint.route('/', methods=['GET'])
+        def _get_all():
+            expand = ExpandSet.load(request.args.get('expand'))
+            return self._get_all(expand)
+
+        return blueprint
