@@ -32,14 +32,14 @@ class WordBlueprint(BaseBlueprint[WordService]):
         def _get_all():
             raise NotImplementedError
 
-        @blueprint.route('/text/<text>', methods=['GET'])
-        def _get_translation_by_text(text: str):
-            model = self._service.get_translation_by_text(text)
+        @blueprint.route('/text/<text>/<ref_id>', methods=['GET'])
+        def _get_translation_by_text(text: str, ref_id: str):
+            model = self._service.get_translation_by_text(text, ref_id)
             return self._return_one(model)
 
-        @blueprint.route('/translation/<translation>', methods=['GET'])
-        def _get_text_by_translation(translation: str):
-            model = self._service.get_text_by_translation(translation)
+        @blueprint.route('/translation/<translation>/<ref_id>', methods=['GET'])
+        def _get_text_by_translation(translation: str, ref_id: str):
+            model = self._service.get_text_by_translation(translation, ref_id)
             return self._return_one(model)
 
         return blueprint

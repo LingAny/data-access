@@ -12,7 +12,7 @@ class WordRepository(Repository[WordDTO]):
         self._context = context
 
     def get_translation_by_text(self, text: str) -> WordDTO:
-        data = self._context.callproc('get_translation_by_text', [text])
+        data = self._context.callproc('get_training_by_text_and_reflection', [text])
         if data is None:
             # need to get data from the web
             pass
@@ -21,7 +21,7 @@ class WordRepository(Repository[WordDTO]):
         return word_dto
 
     def get_text_by_translation(self, translation: str) -> WordDTO:
-        data = self._context.callproc('get_text_by_translation', [translation])
+        data = self._context.callproc('get_training_by_translation_and_reflection', [translation])
         if data is None:
             pass
 
