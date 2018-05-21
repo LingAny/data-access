@@ -18,7 +18,7 @@ class WordBlueprint(BaseBlueprint[WordService]):
 
     @property
     def _name(self) -> str:
-        return 'languages'
+        return 'words'
 
     @property
     def _serializer(self) -> WordSerializer:
