@@ -17,11 +17,11 @@ class WordService(Service[Word, WordDTO, WordRepository]):
         self._converter = WordConverter()
 
     def get_translation_by_text(self, text: str, ref_id: str, expand: AbstractExpandSet) -> Word:
-        word_dto = self._repo.get_translation_by_text(text, ref_id)
+        word_dto = self._repo.get_translation_by_text(text, ref_id, expand)
         return self._convert(word_dto, expand)
 
     def get_text_by_translation(self, translation: str, ref_id: str, expand: AbstractExpandSet) -> Word:
-        word_dto = self._repo.get_text_by_translation(translation, ref_id)
+        word_dto = self._repo.get_text_by_translation(translation, ref_id, expand)
         return self._convert(word_dto, expand)
 
     def _convert(self, entity: WordDTO, expand: AbstractExpandSet) -> Optional[Word]:
