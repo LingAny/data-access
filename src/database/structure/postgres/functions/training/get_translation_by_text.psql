@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION get_translation_by_text(
+    p_text TEXT
+)
+
+RETURNS TABLE(training_id UUID,
+              category_id UUID,
+              native_word TEXT,
+              foreign_word TEXT)
+AS
+$BODY$
+  BEGIN
+    RETURN QUERY
+    SELECT t.training_id, t.category_id, t.native_word, t.foreign_word
+    FROM training t
+    WHERE t.foreign_word = p_text;
+  END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
