@@ -1,13 +1,14 @@
 CREATE OR REPLACE FUNCTION add_language(
   p_language_id UUID,
-  p_title TEXT)
+  p_title TEXT,
+  p_code TEXT)
 
 RETURNS void
 AS
 $BODY$
   BEGIN
-    INSERT INTO languages (language_id, title)
-    VALUES (p_language_id, p_title);
+    INSERT INTO languages (language_id, title, code)
+    VALUES (p_language_id, p_title, p_code);
   END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;

@@ -45,7 +45,7 @@ def load_languages():
         row = languages[i]
         msg = 'load ' + row[1] + ' language'
         logging.info(msg)
-        context.callproc('add_language', [UUID(row[0]), row[1]])
+        context.callproc('add_language', [UUID(row[0]), row[1], row[2]])
 
     logging.info("completed load languages")
 

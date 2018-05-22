@@ -24,7 +24,8 @@ class LanguageSerializer(Serializer):
 
         if model.is_loaded:
             data.update({
-                'title': None if model.title is None else model.title
+                'title': None if model.title is None else model.title,
+                'code': None if model.code is None else model.code
             })
 
         return data
@@ -33,4 +34,5 @@ class LanguageSerializer(Serializer):
     def load(data: Dict[str, Any]) -> LanguageDTO:
         language_id = None if data['id'] is None or data['id'] == 'null' else UUID(data['id'])
         title = data['title']
-        return LanguageDTO(language_id, title)
+        code = data['code']
+        return LanguageDTO(language_id, title, code)

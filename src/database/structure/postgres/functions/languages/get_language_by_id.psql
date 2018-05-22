@@ -3,12 +3,13 @@ CREATE OR REPLACE FUNCTION get_language_by_id(
 )
 
 RETURNS TABLE(language_id UUID,
-              title TEXT)
+              title TEXT,
+              code TEXT)
 AS
 $BODY$
   BEGIN
     RETURN QUERY
-    SELECT l.language_id, l.title
+    SELECT l.language_id, l.title, l.code
     FROM languages l
     WHERE l.language_id = p_language_id;
   END;

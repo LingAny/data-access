@@ -37,3 +37,4 @@ class LanguageTestCase(unittest.TestCase):
         self.assertEqual(obj['id'], sut['id'])
         self.assertEqual(obj['href'], sut['href'])
         self.assertEqual(obj['title'], sut['title'])
+        self.assertEqual(obj['code'], sut['code'])

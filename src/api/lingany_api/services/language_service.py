@@ -1,6 +1,5 @@
 from injector import singleton, inject
 from typing import Optional
-from uuid import UUID
 
 from lingany_api.converters.language_converter import LanguageConverter
 from lingany_api.persistance.dto.language_dto import LanguageDTO

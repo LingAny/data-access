@@ -1,7 +1,8 @@
 @startuml
 
 languages: language_id [UUID]
-languages: title [UUID]
+languages: title [TEXT]
+language: code [TEXT]
 
 reflection: reflection_id [UUID]
 reflection: title [TEXT]
