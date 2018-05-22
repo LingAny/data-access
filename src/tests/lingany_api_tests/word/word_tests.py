@@ -10,27 +10,35 @@ class WordTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls._stub = WordStub()
-    #
-    # def test_get_translation_by_text_from_db(self):
-    #     ref_id = "bdf7921b3b5d4646943e43f88c71b394" #en->ru
-    #     text = "there"
-    #     response, obj = self._stub.get_translation_by_text(text, ref_id)
-    #     self.assertEqual(200, response.status_code)
-    #     translation = "туда"
-    #     self.assertEqual(translation, obj.get('translation'))
-    #
-    # def test_get_text_by_translation_from_db(self):
-    #     ref_id = "bdf7921b3b5d4646943e43f88c71b394" #en->ru
-    #     translation = "туда"
-    #     response, obj = self._stub.get_text_by_translation(translation, ref_id)
-    #     self.assertEqual(200, response.status_code)
-    #     text = "there"
-    #     self.assertEqual(text, obj.get('text'))
+
+    def test_get_translation_by_text_from_db(self):
+        ref_id = "bdf7921b3b5d4646943e43f88c71b394" #en->ru
+        text = "there"
+        response, obj = self._stub.get_translation_by_text(text, ref_id)
+        self.assertEqual(200, response.status_code)
+        translation = "туда"
+        self.assertEqual(translation, obj.get('translation'))
+
+    def test_get_text_by_translation_from_db(self):
+        ref_id = "bdf7921b3b5d4646943e43f88c71b394" #en->ru
+        translation = "туда"
+        response, obj = self._stub.get_text_by_translation(translation, ref_id)
+        self.assertEqual(200, response.status_code)
+        text = "there"
+        self.assertEqual(text, obj.get('text'))
 
     def test_get_translation_by_text_from_web(self):
         ref_id = "bdf7921b3b5d4646943e43f88c71b394" #en->ru
         text = "amazing"
         response, obj = self._stub.get_translation_by_text(text, ref_id)
         self.assertEqual(200, response.status_code)
-        translation = "удивительно"
+        translation = "удивительные"
         self.assertEqual(translation, obj.get('translation'))
+
+    def test_get_text_by_translation_from_web(self):
+        ref_id = "bdf7921b3b5d4646943e43f88c71b394" #en->ru
+        translation = "удивительные"
+        response, obj = self._stub.get_text_by_translation(translation, ref_id)
+        self.assertEqual(200, response.status_code)
+        text = "amazing"
+        self.assertEqual(text, obj.get('text'))

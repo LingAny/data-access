@@ -29,19 +29,32 @@ class WordService(Service[Word, WordDTO, WordRepository]):
             reflection = self._reflection_service.get_by_id(ref_id, expand)
             native_language = self._language_service.get_by_id(reflection.native_language.uid, expand)
             foreign_language = self._language_service.get_by_id(reflection.foreign_language.uid, expand)
-            translation = ""
-            if self.check_if_word_of_phrase(text):
-                translation = self._translator.translate_word(text, native_language.title, foreign_language.title)
-            else:
-                translation = self._translator.translate_text(text, native_language.title, foreign_language.title)
 
+            translation = self.translate_text(text, native_language.code, foreign_language.code)
             word_dto = WordDTO(text=text, translation=translation)
 
         return self._convert(word_dto, expand)
 
     def get_text_by_translation(self, translation: str, ref_id: str, expand: AbstractExpandSet) -> Word:
         word_dto = self._repo.get_text_by_translation(translation, ref_id)
+        if word_dto is None:
+            # need to get data from the web
+            reflection = self._reflection_service.get_by_id(ref_id, expand)
+            native_language = self._language_service.get_by_id(reflection.native_language.uid, expand)
+            foreign_language = self._language_service.get_by_id(reflection.foreign_language.uid, expand)
+
+            text = self.translate_text(translation, foreign_language.code, native_language.code)
+            word_dto = WordDTO(text=text, translation=translation)
+
         return self._convert(word_dto, expand)
+
+    def translate_text(self, text: str, native_lang_code: str, foreign_lang_code: str) -> str:
+        translation = ""
+        if self.check_if_word_of_phrase(text):
+            translation = self._translator.translate_word(text, native_lang_code, foreign_lang_code)
+        else:
+            translation = self._translator.translate_text(text, native_lang_code, foreign_lang_code)
+        return translation
 
     def check_if_word_of_phrase(self, text: str) -> bool:
         text_arr = text.split()
