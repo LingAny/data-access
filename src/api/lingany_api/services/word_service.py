@@ -7,6 +7,7 @@ from lingany_api.persistance.dto.word_dto import WordDTO
 from lingany_api.persistance.repositories.word_repository import WordRepository
 from lingany_api.services.language_service import LanguageService
 from lingany_api.services.reflection_service import ReflectionService
+from lingany_api.translator.translater import Translator
 from sqlutils import AbstractExpandSet, Service
 
 
@@ -19,6 +20,7 @@ class WordService(Service[Word, WordDTO, WordRepository]):
         self._converter = WordConverter()
         self._reflection_service = reflection_service
         self._language_service = language_service
+        self._translator = Translator()
 
     def get_translation_by_text(self, text: str, ref_id: str, expand: AbstractExpandSet) -> Word:
         word_dto = self._repo.get_translation_by_text(text, ref_id)
@@ -29,9 +31,9 @@ class WordService(Service[Word, WordDTO, WordRepository]):
             foreign_language = self._language_service.get_by_id(reflection.foreign_language.uid, expand)
             translation = ""
             if self.check_if_word_of_phrase(text):
-                translation = self._translator.translate_word(text, native_language, foreign_language)
+                translation = self._translator.translate_word(text, native_language.title, foreign_language.title)
             else:
-                translation = self._translator.translate_text(text, native_language, foreign_language)
+                translation = self._translator.translate_text(text, native_language.title, foreign_language.title)
 
             word_dto = WordDTO(text=text, translation=translation)
 
@@ -40,6 +42,13 @@ class WordService(Service[Word, WordDTO, WordRepository]):
     def get_text_by_translation(self, translation: str, ref_id: str, expand: AbstractExpandSet) -> Word:
         word_dto = self._repo.get_text_by_translation(translation, ref_id)
         return self._convert(word_dto, expand)
+
+    def check_if_word_of_phrase(self, text: str) -> bool:
+        text_arr = text.split()
+        if len(text_arr) <= 1:
+            return True
+        else:
+            return False
 
     def _convert(self, entity: WordDTO, expand: AbstractExpandSet) -> Optional[Word]:
         if not entity:

@@ -2,7 +2,7 @@ from lingany_api.translator.models.Params import Params
 
 import json
 from typing import List, Optional
-
+import logging
 import requests
 
 
@@ -13,6 +13,7 @@ class Translator(object):
         self._key = 'trnsl.1.1.20180319T065216Z.ef55a2768a010315.6ad80367b78fed4fc538c3de84288d98d5553e91'
 
     def translate_word(self, text, native_language="en", foreign_language="ru") -> Optional[str]:
+        logging.error(f"TEXT: {text}    NATIVE LLANG: {native_language}     FOREIGN LANG: {foreign_language}")
         parameter = Params(self._key, native_language, foreign_language)
         params = parameter.get_params(text)
         response = requests.get(self._host, params=params)
