@@ -1,12 +1,13 @@
 CREATE OR REPLACE FUNCTION get_all_languages()
 
 RETURNS TABLE(language_id UUID,
-              title TEXT)
+              title TEXT,
+              code TEXT)
 AS
 $BODY$
   BEGIN
     RETURN QUERY
-    SELECT l.language_id, l.title
+    SELECT l.language_id, l.title, l.code
     FROM languages l;
   END;
 $BODY$
