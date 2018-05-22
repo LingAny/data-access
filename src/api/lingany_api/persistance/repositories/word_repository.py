@@ -4,8 +4,8 @@ from typing import Any, List
 from lingany_api.persistance.dto.word_dto import WordDTO
 from lingany_api.services.language_service import LanguageService
 from lingany_api.services.reflection_service import ReflectionService
+from lingany_api.translator.translater import Translator
 from sqlutils import Repository, DataContext
-from lib.translator.translater import Translator
 
 
 class WordRepository(Repository[WordDTO]):
