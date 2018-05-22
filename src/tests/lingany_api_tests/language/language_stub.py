@@ -15,7 +15,8 @@ class LanguageStub(ApiStub):
     def _generate(self, **kwargs) -> Dict[str, Any]:
         return {
             'id': None,
-            'title': uuid4().hex if kwargs.get('title') is None else kwargs.get('title')
+            'title': uuid4().hex if kwargs.get('title') is None else kwargs.get('title'),
+            'code': uuid4().hex if kwargs.get('code') is None else kwargs.get('code')
         }
 
     def get_instance(self) -> Optional[Dict[str, Any]]:
