@@ -5,6 +5,8 @@ from lingany_api.converters.word_converter import WordConverter
 from lingany_api.models.word import Word
 from lingany_api.persistance.dto.word_dto import WordDTO
 from lingany_api.persistance.repositories.word_repository import WordRepository
+from lingany_api.services.language_service import LanguageService
+from lingany_api.services.reflection_service import ReflectionService
 from sqlutils import AbstractExpandSet, Service
 
 
@@ -12,16 +14,31 @@ from sqlutils import AbstractExpandSet, Service
 class WordService(Service[Word, WordDTO, WordRepository]):
 
     @inject
-    def __init__(self, repo: WordRepository) -> None:
+    def __init__(self, repo: WordRepository, reflection_service: ReflectionService, language_service: LanguageService) -> None:
         super().__init__(repo)
         self._converter = WordConverter()
+        self._reflection_service = reflection_service
+        self._language_service = language_service
 
     def get_translation_by_text(self, text: str, ref_id: str, expand: AbstractExpandSet) -> Word:
-        word_dto = self._repo.get_translation_by_text(text, ref_id, expand)
+        word_dto = self._repo.get_translation_by_text(text, ref_id)
+        if word_dto is None:
+            # need to get data from the web
+            reflection = self._reflection_service.get_by_id(ref_id, expand)
+            native_language = self._language_service.get_by_id(reflection.native_language.uid, expand)
+            foreign_language = self._language_service.get_by_id(reflection.foreign_language.uid, expand)
+            translation = ""
+            if self.check_if_word_of_phrase(text):
+                translation = self._translator.translate_word(text, native_language, foreign_language)
+            else:
+                translation = self._translator.translate_text(text, native_language, foreign_language)
+
+            word_dto = WordDTO(text=text, translation=translation)
+
         return self._convert(word_dto, expand)
 
     def get_text_by_translation(self, translation: str, ref_id: str, expand: AbstractExpandSet) -> Word:
-        word_dto = self._repo.get_text_by_translation(translation, ref_id, expand)
+        word_dto = self._repo.get_text_by_translation(translation, ref_id)
         return self._convert(word_dto, expand)
 
     def _convert(self, entity: WordDTO, expand: AbstractExpandSet) -> Optional[Word]:
