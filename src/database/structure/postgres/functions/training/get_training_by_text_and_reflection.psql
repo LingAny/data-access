@@ -16,7 +16,7 @@ $BODY$
     JOIN categories AS c ON r.reflection_id = c.reflection_id
     JOIN training AS t ON c.category_id = t.category_id
     WHERE r.reflection_id = p_reflection_id and
-    t.native_word = p_text
+    t.foreign_word = p_text
     LIMIT 1;
   END;
 $BODY$

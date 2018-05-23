@@ -23,8 +23,8 @@ class WordRepository(Repository[WordDTO]):
         if data is None or len(data) < 1:
             return None
         training_data = data[0]
-        text = training_data.get("native_word")
-        translation = training_data.get("foreign_word")
+        translation = training_data.get("native_word")
+        text = training_data.get("foreign_word")
         return WordDTO(text=text, translation=translation)
 
     def get_by_id(self, uid: Any) -> WordDTO:
