@@ -51,11 +51,9 @@ class WordService(Service[Word, WordDTO, WordRepository]):
     def translate_text(self, text: str, native_lang_code: str, foreign_lang_code: str) -> str:
         translation = ""
         if self.check_if_word_of_phrase(text):
-            # translation = self._translator.translate_word(text, native_lang_code, foreign_lang_code)
-            translation = self._translator.translate_word(text, foreign_lang_code, native_lang_code)
+            translation = self._translator.translate_word(text, native_lang_code, foreign_lang_code)
         else:
-            # translation = self._translator.translate_text(text, native_lang_code, foreign_lang_code)
-            translation = self._translator.translate_text(text, foreign_lang_code, native_lang_code)
+            translation = self._translator.translate_text(text, native_lang_code, foreign_lang_code)
         return translation
 
     def check_if_word_of_phrase(self, text: str) -> bool:

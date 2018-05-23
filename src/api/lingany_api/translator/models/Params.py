@@ -9,12 +9,12 @@ class Params(object):
         self._flang = flang
 
     def get_params(self, text: str) -> Dict[str, Any]:
-        lang = self._nlang + '-' + self._flang
+        lang = self._flang + '-' + self._nlang
         params = {'key': self._conf_key, 'lang': lang, 'text': text}
         return params
 
     def post_params(self, text: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-        lang = self._nlang + '-' + self._flang
+        lang = self._flang + '-' + self._nlang
         params = {'key': self._conf_key, 'lang': lang}
         data = {'text': text}
         return params, data
